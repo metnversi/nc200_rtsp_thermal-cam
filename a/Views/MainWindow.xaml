@@ -9,18 +9,13 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel, IsDesignTimeCreatable=False}"
         Style="{StaticResource MaterialDesignWindow}"
-        Title="Demo App" Height="600" Width="850">
+        Title="Demo App" Height="700" Width="950">
   <Grid>
     <TabControl materialDesign:NavigationRailAssist.ShowSelectionBackground="True"
                 SnapsToDevicePixels="True"
                 Style="{StaticResource MaterialDesignNavigationRailTabControl}"
                 TabStripPlacement="Left">
-      <!--<materialDesign:NavigationRailAssist.FloatingContent>
-        <Button
-        Margin="8"
-        Content="{materialDesign:PackIcon Kind=Plus}"
-        Style="{StaticResource MaterialDesignFloatingActionSecondaryButton}" />
-      </materialDesign:NavigationRailAssist.FloatingContent>-->
+      
       <TabItem>
         <TabItem.Header>
           <StackPanel Width="auto" Height="auto">
@@ -31,14 +26,32 @@
         </TabItem.Header>
         <view:HomeView DataContext="{Binding HomeViewModel}"/>
       </TabItem>
-      <TabItem Header="Tab 2">
-        <!-- Gear tab content goes here -->
+      <TabItem>
+        <TabItem.Header>
+          <StackPanel Width="auto" Height="auto">
+            <materialDesign:PackIcon Width="24" Height="24" 
+                                     HorizontalAlignment="Center" Kind="Bell" />
+            <TextBlock HorizontalAlignment="Center" Text="Alarm" />
+          </StackPanel>
+        </TabItem.Header>
       </TabItem>
-      <TabItem Header="Tab 3">
-        <!-- Hero tab content goes here -->
+      <TabItem>
+        <TabItem.Header>
+          <StackPanel Width="auto" Height="auto">
+            <materialDesign:PackIcon Width="24" Height="24" 
+                      HorizontalAlignment="Center" Kind="Database" />
+            <TextBlock HorizontalAlignment="Center" Text="Data" />
+          </StackPanel>
+        </TabItem.Header>
       </TabItem>
-      <TabItem Header="Setting">
-        <!-- Setting tab content goes here -->
+      <TabItem>
+        <TabItem.Header>
+          <StackPanel Width="auto" Height="auto">
+            <materialDesign:PackIcon Width="24" Height="24" 
+                        HorizontalAlignment="Center" Kind="Settings" />
+            <TextBlock HorizontalAlignment="Center" Text="Settings" />
+          </StackPanel>
+        </TabItem.Header>
       </TabItem>
     </TabControl>
 

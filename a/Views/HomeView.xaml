@@ -5,11 +5,32 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:viewModels="clr-namespace:a.ViewModels"
              d:DataContext="{d:DesignInstance Type=viewModels:HomeViewModel, IsDesignTimeCreatable=False}"
-             xmlns:local="clr-namespace:a.Views"
+             xmlns:local="clr-namespace:a.Views" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             >
+             Background="LightGray">
     <Grid>
-    
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition />
+      <ColumnDefinition />
+      <ColumnDefinition />
+      <ColumnDefinition />
+      <ColumnDefinition />
+      <ColumnDefinition />
+      <ColumnDefinition />
+      <ColumnDefinition />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="50"/>
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+    <Button Content="{materialDesign:PackIcon Kind=Plus}"
+            Margin="10" Command="{Binding ShowCommand}"/>
   </Grid>
 </UserControl>
