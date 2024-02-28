@@ -6,8 +6,6 @@ using a.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
-using OpenCvSharp;
-
 namespace a.ViewModels;
 
 public partial class HomeViewModel : ObservableObject

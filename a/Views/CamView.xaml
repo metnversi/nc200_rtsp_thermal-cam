@@ -5,11 +5,22 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:a.Views"
              xmlns:viewModels="clr-namespace:a.ViewModels"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DataContext="{d:DesignInstance Type=viewModels:CamViewModel, IsDesignTimeCreatable=False}"
              mc:Ignorable="d"
-             Background="LightBlue" Height="232" Width="372">
+             Background="#005BAA" Height="300" Width="400">
   <Grid>
-    <DockPanel Background="Black" Margin="10">
+    <Grid.RowDefinitions>
+      <RowDefinition/>
+      <RowDefinition/>
+      <RowDefinition/>
+    </Grid.RowDefinitions>
+    <materialDesign:Card Grid.Row="2"  Background="Black"
+                         Foreground="White" Margin="241,66,15,10">
+      <TextBlock FontSize="10" Text="{Binding Ip}" HorizontalAlignment="Center"
+                 VerticalAlignment="Center"/>
+    </materialDesign:Card>
+    <DockPanel Background="Black" Margin="15,20,15,40" Grid.RowSpan="3">
       <Image Source="{Binding DisplayFrame}"/>
     </DockPanel>
   </Grid>

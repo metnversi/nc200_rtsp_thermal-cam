@@ -53,6 +53,15 @@
           </StackPanel>
         </TabItem.Header>
       </TabItem>
+      <TabItem>
+        <TabItem.Header>
+          <StackPanel Width="auto" Height="auto">
+            <materialDesign:PackIcon Width="24" Height="24" 
+                  HorizontalAlignment="Center" Kind="About" />
+            <TextBlock HorizontalAlignment="Center" Text="About" />
+          </StackPanel>
+        </TabItem.Header>
+      </TabItem>
     </TabControl>
 
   </Grid>

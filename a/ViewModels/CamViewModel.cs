@@ -31,7 +31,7 @@ public partial class CamViewModel : ObservableObject
         while(true)
         {
             capture.Read(Frame);
-            if (Frame.Data != null)
+            if ( Frame.Rows > 0 && Frame.Cols > 0)
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
