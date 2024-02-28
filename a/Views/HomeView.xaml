@@ -7,30 +7,47 @@
              d:DataContext="{d:DesignInstance Type=viewModels:HomeViewModel, IsDesignTimeCreatable=False}"
              xmlns:local="clr-namespace:a.Views" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
+             d:DesignHeight="344" d:DesignWidth="800"
              Background="LightGray">
+  <DockPanel LastChildFill="True" >
     <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition />
-      <ColumnDefinition />
-      <ColumnDefinition />
-      <ColumnDefinition />
-      <ColumnDefinition />
-      <ColumnDefinition />
-      <ColumnDefinition />
-      <ColumnDefinition />
-      <ColumnDefinition />
-    </Grid.ColumnDefinitions>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="50"/>
-      <RowDefinition />
-      <RowDefinition />
-      <RowDefinition />
-      <RowDefinition />
-      <RowDefinition />
-      <RowDefinition />
-    </Grid.RowDefinitions>
-    <Button Content="{materialDesign:PackIcon Kind=Plus}"
-            Margin="10" Command="{Binding ShowCommand}"/>
-  </Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="40"/>
+        <RowDefinition Height="65*" />
+        <RowDefinition Height="67*" />
+        <RowDefinition Height="67*" />
+        <RowDefinition Height="67*" />
+        <RowDefinition Height="40*" />
+        <RowDefinition  />
+      </Grid.RowDefinitions>
+      <!--<StackPanel Background="Black" Grid.Row="0" Grid.Column="0" 
+                Grid.RowSpan="3" Grid.ColumnSpan="3"
+                DockPanel.Dock="Left" Margin="10">
+        <Button Command="{Binding AddPanelCommand}" Width="72" />
+                
+      </StackPanel>-->
+      <Button Command="{Binding ShowCommand}" />
+
+      <ItemsControl Grid.Row="1" Grid.Column="0" 
+                  Grid.RowSpan="6" Grid.ColumnSpan="12" 
+                  ItemsSource="{Binding Panels}">
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <WrapPanel Orientation="Horizontal"/>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+    </ItemsControl>
+    </Grid>
+  </DockPanel>
 </UserControl>

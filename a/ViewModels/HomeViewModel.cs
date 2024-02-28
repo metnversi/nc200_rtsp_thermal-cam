@@ -13,35 +13,31 @@ namespace a.ViewModels;
 public partial class HomeViewModel : ObservableObject
 {
     public ConnectViewModel ConnectViewModel { get; }
-    public ObservableCollection<VideoCapture> Feeds { get; } 
-
+    public ObservableCollection<CamView> Panels { get; }
+    
     public HomeViewModel()
     {
-        ConnectViewModel = new ConnectViewModel();
-        Feeds = new ObservableCollection<VideoCapture>();
-    }
-
-    [RelayCommand]
-    public void AddVideoCapture()
-    {
-        var capture = new VideoCapture(0);
-        Feeds.Add(capture);
+        ConnectViewModel = new ConnectViewModel(this);
+        Panels = new ObservableCollection<CamView>();
     }
 
     [RelayCommand]
     public void Show()
     {
-        var con = new ConnectView();
-        var window = new System.Windows.Window
+        Application.Current.Dispatcher.Invoke(new Action(() =>
         {
-            Content = con,
-            SizeToContent = SizeToContent.WidthAndHeight, //this line is important
-            WindowStyle = WindowStyle.None, // This will remove the title bar and system buttons
-            ResizeMode = ResizeMode.NoResize,
-            WindowStartupLocation = WindowStartupLocation.CenterOwner // This will center the window
-        };
-        window.Owner = Application.Current.MainWindow; // Set the owner to the current window
-        window.ShowDialog();
+            var con = new ConnectView(this);
+            var window = new System.Windows.Window
+            {
+                Content = con,
+                SizeToContent = SizeToContent.WidthAndHeight,
+                WindowStyle = WindowStyle.None,
+                ResizeMode = ResizeMode.NoResize,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen
+            };
+            window.ShowDialog();
+        }));
     }
+    
 
 }

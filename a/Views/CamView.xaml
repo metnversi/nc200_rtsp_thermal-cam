@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="a.Views.CamView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:a.Views"
+             xmlns:viewModels="clr-namespace:a.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewModels:CamViewModel, IsDesignTimeCreatable=False}"
+             mc:Ignorable="d"
+             Background="LightBlue" Height="232" Width="372">
+  <Grid>
+    <DockPanel Background="Black" Margin="10">
+      <Image Source="{Binding DisplayFrame}"/>
+    </DockPanel>
+  </Grid>
+</UserControl>

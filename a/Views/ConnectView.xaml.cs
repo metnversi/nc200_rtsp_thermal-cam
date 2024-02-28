@@ -9,10 +9,9 @@ namespace a.Views;
 /// </summary>
 public partial class ConnectView : UserControl
 {
-    public ConnectView()
+    public ConnectView(HomeViewModel homeViewModel)
     {
         InitializeComponent();
-        DataContext = new ConnectViewModel();
+        DataContext = new ConnectViewModel(homeViewModel);
     }
-    
 }
