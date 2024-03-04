@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up .NET Core
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '7.x'
 
@@ -35,7 +35,7 @@ jobs:
         run: dotnet test --configuration Release --no-build --collect:"XPlat Code Coverage" --results-directory ${{github.workspace}}/.build/coverage
         
       - name: ReportGenerator
-        uses: danielpalme/ReportGenerator-GitHub-Action@5.1.26
+        uses: danielpalme/ReportGenerator-GitHub-Action@5.2.2
         with:
           reports: ${{github.workspace}}/.build/coverage/**/coverage.cobertura.xml
           targetdir: ${{github.workspace}}/.build/coveragereport/
@@ -48,7 +48,7 @@ jobs:
           New-Item -Type File -Value "${{ github.event.number }}" -Force -Path "${{github.workspace}}/.build/coveragereport/PullRequestNumber"
 
       - name: Upload Code Coverage Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: CodeCoverage
           path: ${{github.workspace}}/.build/coveragereport/
@@ -60,7 +60,7 @@ jobs:
 
       - name: Upload artifact for deployment job
         if: ${{ github.event_name != 'pull_request' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: app
           path: ${{github.workspace}}/.build/publish
@@ -76,7 +76,7 @@ jobs:
       contents: write
 
     steps:
-      - uses: fastify/github-action-merge-dependabot@v3.9.1
+      - uses: fastify/github-action-merge-dependabot@v3.10.1
         with:
           # For GitHub Auto Merge to work it must be enabled on the repo.
           # This can be done with the script here:
