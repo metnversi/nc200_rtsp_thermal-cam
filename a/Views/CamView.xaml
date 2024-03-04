@@ -6,9 +6,10 @@
              xmlns:local="clr-namespace:a.Views"
              xmlns:viewModels="clr-namespace:a.ViewModels"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:libvlc="clr-namespace:LibVLCSharp.WPF;assembly=LibVLCSharp.WPF"
              d:DataContext="{d:DesignInstance Type=viewModels:CamViewModel, IsDesignTimeCreatable=False}"
              mc:Ignorable="d"
-             Background="#005BAA" Height="300" Width="400">
+             Background="#005BAA" Height="350" Width="500">
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition/>
@@ -17,11 +18,14 @@
     </Grid.RowDefinitions>
     <materialDesign:Card Grid.Row="2"  Background="Black"
                          Foreground="White" Margin="241,66,15,10">
-      <TextBlock FontSize="10" Text="{Binding Ip}" HorizontalAlignment="Center"
-                 VerticalAlignment="Center"/>
+      <!--<TextBlock FontSize="10" Text="{Binding }" HorizontalAlignment="Center"
+                 VerticalAlignment="Center"/>-->
     </materialDesign:Card>
-    <DockPanel Background="Black" Margin="15,20,15,40" Grid.RowSpan="3">
-      <Image Source="{Binding DisplayFrame}"/>
+    <DockPanel Background="Black" Margin="15,20,15,60" Grid.RowSpan="3">
+      <libvlc:VideoView x:Name="view" DockPanel.Dock="Top" MediaPlayer="{Binding Player}"/>
     </DockPanel>
+    <CheckBox Grid.Row="2" Background="Orange" Margin="15,60,266,4" 
+    x:Name="MaterialDesignFilledTextBoxEnabledComboBox"
+    Content="Temp Camera" Foreground="White" IsChecked="{Binding IsTemp}"/>
   </Grid>
 </UserControl>

@@ -1,44 +1,86 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System.Windows.Media.Imaging;
-using OpenCvSharp.WpfExtensions;
+﻿using System.Windows;
 
-using OpenCvSharp;
-using System.Windows;
+using a.Models;
+
+using CommunityToolkit.Mvvm.ComponentModel;
+
+using LibVLCSharp.Shared;
 
 namespace a.ViewModels;
 
 public partial class CamViewModel : ObservableObject
 {
-    public string Ip { get; }
-    public Mat Frame { get; private set; }
-    public BitmapSource DisplayFrame { get; private set; }
-    public VideoCapture capture;
-    private static HashSet<string> usedIps = new HashSet<string>();
-    public CamViewModel(string ip)
+    [ObservableProperty]
+    public HttpCamClient cam;
+    
+    public bool _isTemp;
+    public bool IsTemp
     {
-        if (usedIps.Contains(ip))
+        get => _isTemp;
+        set
         {
-            throw new ArgumentException("This IP address is already in use.");
+            _isTemp = value;
+            OnPropertyChanged();
+            SwitchMedia();
         }
-        Ip = ip;
-        capture = new VideoCapture(ip);
-        Frame = new Mat();
-        Task.Run(() => Capture());
     }
 
-    public void Capture()
+    public Media media;
+    public Media media2;
+    
+    public MediaPlayer Player { get; private set; }
+
+    private static HashSet<string>? usedIps;
+
+    public CamViewModel(string camip, string Username, string Password)
     {
-        while(true)
+        if(camip is null)
         {
-            capture.Read(Frame);
-            if ( Frame.Rows > 0 && Frame.Cols > 0)
-            {
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    DisplayFrame = Frame.ToBitmapSource();
-                    OnPropertyChanged(nameof(DisplayFrame)); // Notify the UI that DisplayFrame has changed
-                });
-            }
+            throw new ArgumentNullException(nameof(camip));
+        }
+        Cam = new HttpCamClient(camip, $"{Username}", $"{Password}");
+        usedIps ??= new HashSet<string>();
+        if (usedIps.Contains(camip))
+        {
+            return;
+            throw new ArgumentException("This IP address is already in use.");
+        }
+        usedIps.Add(camip);
+    }
+
+    public static async Task<CamViewModel> CreateAsync(string camip, string Username, string Password)
+    {
+        var camViewModel = new CamViewModel(camip, Username, Password);
+        await camViewModel.Capture();
+        return camViewModel;
+    }
+
+    public async Task Capture()
+    {
+        await Application.Current.Dispatcher.Invoke(async () =>
+        {
+            await Cam.A.Login();
+            var (irRtspUrl, vlRtspUrl) = await Cam.F.OpenStream();
+            var libVLC = new LibVLC();
+            var media = new Media(libVLC, irRtspUrl, FromType.FromLocation);
+            media.AddOption(":network-caching=100");  
+            media2 = new Media(libVLC, vlRtspUrl, FromType.FromLocation);
+            media2.AddOption(":network-caching=100");  
+            Player = new MediaPlayer(media);
+
+            Player.Play();
+        });
+    }
+    private void SwitchMedia()
+    {
+        if (Player != null)
+        {
+            var oldMedia = Player.Media;
+            Player.Stop();
+            Player.Media = IsTemp ? media2 : media;
+            Player.Play();
+            oldMedia.Dispose();  // Dispose of the old media
         }
     }
+    
 }

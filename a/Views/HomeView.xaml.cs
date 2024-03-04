@@ -1,15 +1,17 @@
 ﻿using System.Windows.Controls;
+using a.ViewModels;
 
-namespace a.Views
+namespace a.Views;
+
+
+/// <summary>
+/// Interaction logic for HomeView.xaml
+/// </summary>
+public partial class HomeView : UserControl
 {
-    /// <summary>
-    /// Interaction logic for HomeView.xaml
-    /// </summary>
-    public partial class HomeView : UserControl
+    public HomeView()
     {
-        public HomeView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+        DataContext = new HomeViewModel();
     }
 }

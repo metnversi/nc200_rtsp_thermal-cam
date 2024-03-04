@@ -37,7 +37,8 @@
         <Button Command="{Binding AddPanelCommand}" Width="72" />
                 
       </StackPanel>-->
-      <Button Command="{Binding ShowCommand}" />
+      <Button Command="{Binding ShowCommand}" 
+              Background="#005BAA" Margin="5"/>
 
       <ItemsControl Grid.Row="1" Grid.Column="0" 
                   Grid.RowSpan="6" Grid.ColumnSpan="12" 
@@ -47,6 +48,11 @@
                 <WrapPanel Orientation="Horizontal"/>
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemContainerStyle>
+          <Style TargetType="local:CamView">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+          </Style>
+        </ItemsControl.ItemContainerStyle>
     </ItemsControl>
     </Grid>
   </DockPanel>

@@ -25,7 +25,7 @@ public partial class HomeViewModel : ObservableObject
         Application.Current.Dispatcher.Invoke(new Action(() =>
         {
             var con = new ConnectView(this);
-            var window = new System.Windows.Window
+            var window = new Window
             {
                 Content = con,
                 SizeToContent = SizeToContent.WidthAndHeight,

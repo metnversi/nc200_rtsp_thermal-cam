@@ -36,8 +36,6 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" />
-    <PackageReference Include="LibVLCSharp" />
-    <PackageReference Include="LibVLCSharp.wpf" />
     <PackageReference Include="MaterialDesignThemes" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
@@ -46,7 +44,10 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
     <PackageReference Include="Microsoft.Extensions.Hosting" />
-    <PackageReference Include="Newtonsoft.Json" />
-    <PackageReference Include="VideoLAN.LibVLC.Windows" />
+    <PackageReference Include="Newtonsoft.json" />
+    <PackageReference Include="OpenCvSharp4" />
+    <PackageReference Include="OpenCvSharp4.Extensions" />
+    <PackageReference Include="OpenCvSharp4.runtime.win" />
+    <PackageReference Include="OpenCvSharp4.WpfExtensions" />
   </ItemGroup>
 </Project>
