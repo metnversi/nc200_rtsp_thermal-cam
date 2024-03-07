@@ -1,10 +1,15 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+﻿using a.Models;
+using a.ViewModels;
+
+using CommunityToolkit.Mvvm.Messaging;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Windows;
 using System.Windows.Threading;
+
+using static a.ViewModels.ConnectViewModel;
 
 namespace a;
 
@@ -41,6 +46,10 @@ public partial class App : Application
         {
             services.AddSingleton<MainWindow>();
             services.AddSingleton<MainWindowViewModel>();
+            services.AddSingleton<ConnectViewModel>();
+            services.AddSingleton<HomeViewModel>();
+            services.AddSingleton<DataViewModel>();
+            
 
             services.AddSingleton<WeakReferenceMessenger>();
             services.AddSingleton<IMessenger, WeakReferenceMessenger>(provider => provider.GetRequiredService<WeakReferenceMessenger>());

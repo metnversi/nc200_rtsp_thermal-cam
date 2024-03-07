@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="a.ViewModels.CamViewModel">
+    <Position X="6.25" Y="5.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAQABAAAAAAAAIAAAAAgAACAAAAAAABAAFAABYAIAQA=</HashCode>
+      <FileName>ViewModels\CamViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="a.ViewModels.ChartViewModel">
+    <Position X="12" Y="3.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAgAAAAAAAgAAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\ChartViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="a.ViewModels.ConnectViewModel">
+    <Position X="6.25" Y="2.5" Width="2.75" />
+    <NestedTypes>
+      <Class Name="a.ViewModels.ConnectViewModel.HttpCamClientFactory" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ViewModels\ConnectViewModel.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>EAYAEAAAAAAAAAAAAABAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>ViewModels\ConnectViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="a.ViewModels.DataViewModel">
+    <Position X="12" Y="5.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAIAIABEEgAABAAAABAAAAAAAAAAABAAAAABAAAMAA=</HashCode>
+      <FileName>ViewModels\DataViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="a.ViewModels.HomeViewModel">
+    <Position X="9.25" Y="7.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAEAAABAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\HomeViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="a.MainWindowViewModel">
+    <Position X="9.25" Y="5.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAIAAA=</HashCode>
+      <FileName>ViewModels\MainWindowViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="a.ViewModels.SettingViewModel">
+    <Position X="9.25" Y="4" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\SettingViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="a.Models.Temp">
+    <Position X="5.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACAAIAAAAAAgBAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Temp.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="a.Models.Request">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABEABAAQAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAACA=</HashCode>
+      <FileName>Models\Request.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="a.Models.Message" Collapsed="true">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>kEBGUIAAgAAAAIgCAIFAgEEEEMAACAIBAAABAgsQAAA=</HashCode>
+      <FileName>Models\Message.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b4.HttpUtility">
+    <Position X="9.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\HttpUtility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="a.Models.HttpCamClient">
+    <Position X="0.5" Y="4" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAEAAAAAAAAAAAAAAAAAACAIAsAAAAAA=</HashCode>
+      <FileName>Models\HttpCamClient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b4.FunctionalAPI">
+    <Position X="2.75" Y="2.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAMAAAAACAoAAAAAABAAACAQAAAAAAAA=</HashCode>
+      <FileName>Models\FunctionalAPI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b4.ConfigAPI">
+    <Position X="0.5" Y="7.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAAABAAACAAAAAAAAAA=</HashCode>
+      <FileName>Models\ConfigAPI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="b4.AuthenAPI">
+    <Position X="2.75" Y="6.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AQUAAAEAAAAAAEAAAAAEAAAAAAAAAAAACAIQAAAAAAA=</HashCode>
+      <FileName>Models\AuthenAPI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

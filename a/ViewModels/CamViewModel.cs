@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
 
 using a.Models;
 
@@ -12,7 +13,7 @@ public partial class CamViewModel : ObservableObject
 {
     [ObservableProperty]
     public HttpCamClient cam;
-    
+    private System.Timers.Timer timer;
     public bool _isTemp;
     public bool IsTemp
     {
@@ -29,28 +30,31 @@ public partial class CamViewModel : ObservableObject
     public Media media2;
     
     public MediaPlayer Player { get; private set; }
-
     private static HashSet<string>? usedIps;
+    public DataViewModel DataViewModel { get; set;}
+    public string? ipAddress;
 
-    public CamViewModel(string camip, string Username, string Password)
+    public CamViewModel(HttpCamClient camClient)
     {
-        if(camip is null)
+        DataViewModel = new DataViewModel();
+        if(camClient is null)
         {
-            throw new ArgumentNullException(nameof(camip));
+            throw new ArgumentNullException(nameof(camClient));
         }
-        Cam = new HttpCamClient(camip, $"{Username}", $"{Password}");
+        Cam = camClient;
+        ipAddress = Cam.Url; 
+        
         usedIps ??= new HashSet<string>();
-        if (usedIps.Contains(camip))
+        if (usedIps.Contains(ipAddress))
         {
-            return;
             throw new ArgumentException("This IP address is already in use.");
         }
-        usedIps.Add(camip);
+        usedIps.Add(ipAddress);
     }
 
-    public static async Task<CamViewModel> CreateAsync(string camip, string Username, string Password)
+    public static async Task<CamViewModel> CreateAsync(HttpCamClient camClient)
     {
-        var camViewModel = new CamViewModel(camip, Username, Password);
+        var camViewModel = new CamViewModel(camClient);
         await camViewModel.Capture();
         return camViewModel;
     }
@@ -61,13 +65,18 @@ public partial class CamViewModel : ObservableObject
         {
             await Cam.A.Login();
             var (irRtspUrl, vlRtspUrl) = await Cam.F.OpenStream();
+            if (timer == null)
+            {
+                timer = new System.Timers.Timer(1000); 
+                timer.Elapsed += async (sender, e) => await GetRealTimeTemperatureAsync();
+                timer.Start();
+            }
             var libVLC = new LibVLC();
             var media = new Media(libVLC, irRtspUrl, FromType.FromLocation);
             media.AddOption(":network-caching=100");  
             media2 = new Media(libVLC, vlRtspUrl, FromType.FromLocation);
             media2.AddOption(":network-caching=100");  
             Player = new MediaPlayer(media);
-
             Player.Play();
         });
     }
@@ -79,8 +88,28 @@ public partial class CamViewModel : ObservableObject
             Player.Stop();
             Player.Media = IsTemp ? media2 : media;
             Player.Play();
-            oldMedia.Dispose();  // Dispose of the old media
+            oldMedia.Dispose(); 
         }
+    }
+    private async Task<Temp> GetRealTimeTemperatureAsync()
+    {
+        var (min, max) = await Cam.F.GetRealTimeTemp();
+        var temp = new Temp
+        {
+            IpAddress = ipAddress,
+            TimeReading = DateTime.Now,
+            MinTemp = min,
+            MaxTemp = max,
+        };
+        temp.PropertyChanged += (sender, e) =>
+        {
+            System.Diagnostics.Debug.WriteLine($"Property {e.PropertyName} changed");
+        };
+        Application.Current.Dispatcher.Invoke(() =>
+        {
+            DataViewModel.AddTemp(temp);
+        });
+        return temp;
     }
     
 }

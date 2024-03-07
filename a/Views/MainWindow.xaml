@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel, IsDesignTimeCreatable=False}"
         Style="{StaticResource MaterialDesignWindow}"
-        Title="Demo App" Height="700" Width="950">
+        Title="Demo App" Height="600" Width="950">
   <Grid>
     <TabControl materialDesign:NavigationRailAssist.ShowSelectionBackground="True"
                 SnapsToDevicePixels="True"
@@ -45,6 +45,7 @@
             <TextBlock HorizontalAlignment="Center" Text="Data" />
           </StackPanel>
         </TabItem.Header>
+        <view:DataView DataContext="{Binding DataViewModel}"/>
       </TabItem>
       
       <TabItem>

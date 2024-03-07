@@ -31,18 +31,15 @@
         <RowDefinition Height="40*" />
         <RowDefinition  />
       </Grid.RowDefinitions>
-      <!--<StackPanel Background="Black" Grid.Row="0" Grid.Column="0" 
-                Grid.RowSpan="3" Grid.ColumnSpan="3"
-                DockPanel.Dock="Left" Margin="10">
-        <Button Command="{Binding AddPanelCommand}" Width="72" />
-                
-      </StackPanel>-->
+      
       <Button Command="{Binding ShowCommand}" 
-              Background="#005BAA" Margin="5"/>
+              Background="#005BAA" Margin="5"
+              Height="30" Content="Add" Foreground="White"/>
 
       <ItemsControl Grid.Row="1" Grid.Column="0" 
                   Grid.RowSpan="6" Grid.ColumnSpan="12" 
-                  ItemsSource="{Binding Panels}">
+                  ItemsSource="{Binding Panels}"
+                    Margin="10">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
                 <WrapPanel Orientation="Horizontal"/>

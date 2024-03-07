@@ -10,7 +10,7 @@ namespace a.Models;
 public class HttpCamClient
 {
     public HttpClient _client;
-    private string? Url { get; set; }
+    public string? Url { get; set; }
     public FunctionalAPI F { get; private set; }
     public ConfigAPI C { get; private set; }
     public AuthenAPI A { get; private set; }

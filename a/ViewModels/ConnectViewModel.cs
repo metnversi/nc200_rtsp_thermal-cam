@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
 
+using a.Models;
 using a.Views;
 
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -20,6 +22,8 @@ public partial class ConnectViewModel : ObservableObject
     [ObservableProperty]
     private string _password;
 
+    //public ObservableCollection<Temp> source{ get; }
+
     public ConnectViewModel(HomeViewModel homeViewModel)
     {
         HomeViewModel = homeViewModel;
@@ -39,8 +43,19 @@ public partial class ConnectViewModel : ObservableObject
     [RelayCommand]
     private async Task Add()
     {
-        var camViewModel = await CamViewModel.CreateAsync(Ip, Username,Password);
+        var factory = new HttpCamClientFactory();
+        var camClient = factory.Create(Ip, Username, Password);
+        var camViewModel = await CamViewModel.CreateAsync(camClient);
         var camView = new CamView { DataContext = camViewModel };
         HomeViewModel.Panels.Add(camView);
     }
+
+    public class HttpCamClientFactory
+    {
+        public HttpCamClient Create(string ip, string username, string password)
+        {
+            return new HttpCamClient(ip, username, password);
+        }
+    }
 }
+

@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="a.Views.DataView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:viewModels="clr-namespace:a.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewModels:DataViewModel, IsDesignTimeCreatable=False}"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:local="clr-namespace:a.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             Background="Black">
+    <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition/>
+      <RowDefinition/>
+      <RowDefinition/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition/>
+      <ColumnDefinition/>
+      <ColumnDefinition/>
+      <ColumnDefinition/>
+      <ColumnDefinition/>
+      <ColumnDefinition/>
+    </Grid.ColumnDefinitions>
+    <DataGrid Grid.RowSpan="2" Grid.ColumnSpan="3" Margin="8" Grid.Row="1"
+              ItemsSource="{Binding Source, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+              AutoGenerateColumns="False"
+              CanUserAddRows="False" HeadersVisibility="All">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="IP" Binding="{Binding IpAddress}"/>
+        <DataGridTextColumn Header="Min Temp" Binding="{Binding MinTemp}"/>
+        <DataGridTextColumn Header="Max Temp" Binding="{Binding MaxTemp}"/>
+        <DataGridTextColumn Header="Time" Binding="{Binding TimeReading}"/>
+      </DataGrid.Columns>
+    </DataGrid>
+    <lvc:CartesianChart Grid.Row="0" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="3" Margin="5"
+                        Series="{Binding ChartViewModel.SeriesCollection}">
+      <lvc:CartesianChart.AxisX>
+        <lvc:Axis Title="Time" Labels="{Binding Labels}"></lvc:Axis>
+      </lvc:CartesianChart.AxisX>
+      <lvc:CartesianChart.AxisY>
+        <lvc:Axis LabelFormatter="{Binding YAxisFormatter}"
+                                          Title="Temperature"/>
+      </lvc:CartesianChart.AxisY>
+    </lvc:CartesianChart>
+      <lvc:CartesianChart Series="{Binding ChartViewModel.MemoryChartSeries}"
+                          Grid.ColumnSpan="3" Margin="5">
+                                             
+                                            
+        <lvc:CartesianChart.AxisY>
+          <lvc:Axis Title="Memory Usage (MB)"
+                    LabelFormatter="{Binding YAxis2Formatter}"/>
+        </lvc:CartesianChart.AxisY>
+        <lvc:CartesianChart.AxisX>
+          <lvc:Axis Title="Time"/>
+        </lvc:CartesianChart.AxisX>
+      </lvc:CartesianChart>
+    <StackPanel  Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="3" Background="Black" Margin="10">
+      <TextBlock Text="{Binding Hello}" Foreground="White"/>
+      <Button Margin="0,40" Command="{Binding aaaaahCommand}"/>
+    </StackPanel>
+  </Grid>
+</UserControl>
