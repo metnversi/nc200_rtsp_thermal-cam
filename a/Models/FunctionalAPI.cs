@@ -1,9 +1,9 @@
-﻿using a.Models;
+﻿using System.Net.Http;
+
+using a.Models;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Net.Http;
 
 namespace b4;
 
@@ -20,7 +20,7 @@ public class FunctionalAPI
         _authenAPI = authenAPI;
     }
 
-    public async Task GetTempObj()
+    public async Task<string>  GetObj()
     {
         var request = new Request
         {
@@ -40,19 +40,21 @@ public class FunctionalAPI
                 page_count = 2
             },
         };
-        var response = await HttpUtility.ProcessJson(request,_client, Url);
-        if (response.IsSuccessStatusCode)
+        var response = await HttpUtility.ProcessJson(request, _client, Url);
+        var result = await response?.Content?.ReadAsStringAsync() ?? "";
+        await Console.Out.WriteLineAsync(result);
+        var jsonObject = JObject.Parse(result);
+        var reportPath = jsonObject["message"]["report_path"]?.ToString() ?? "no object found";
+
+        if (response?.IsSuccessStatusCode == true)
         {
-            var result = await response.Content.ReadAsStringAsync();
-            await Console.Out.WriteLineAsync(result);
-            var jsonObject = JObject.Parse(result);
-            var reportPath = jsonObject["message"]["report_path"].ToString();
             Console.WriteLine($"Report Path: {reportPath}");
         }
         else
         {
-            Console.WriteLine($"HTTP request failed: {response.StatusCode}");
+            Console.WriteLine($"HTTP request failed: {response?.StatusCode}");
         }
+        return reportPath;
     }
 
     public async void ThermalCapture()
@@ -168,4 +170,37 @@ public class FunctionalAPI
         }
         return (null, null);
     }
+
+
+    public async Task<(string?, string?)> GetRealTimeTemp()
+    {
+        var requestObject = new Request
+        {
+            action = "request",
+            cmdtype = 520,
+            sequence = 1,
+            token = _authenAPI.token,
+            message = new Message { }
+        };
+
+        var response = await HttpUtility.ProcessJson(requestObject, _client, Url);
+        if (response.IsSuccessStatusCode)
+        {
+            var result = await response.Content.ReadAsStringAsync();
+            await Console.Out.WriteLineAsync(result);
+            var jsonObject = JObject.Parse(result);
+            var min_temp = jsonObject["message"]["global_min_temp"].ToString();
+            var max_temp = jsonObject["message"]["global_max_temp"].ToString();
+
+            await Console.Out.WriteLineAsync($"Min Temp: {min_temp}, Max Temp: {max_temp}");
+            return (min_temp, max_temp);
+
+        }
+        else
+        {
+            Console.WriteLine($"HTTP request failed: {response.StatusCode}");
+            return (null, null);
+        }
+    }
+
 }

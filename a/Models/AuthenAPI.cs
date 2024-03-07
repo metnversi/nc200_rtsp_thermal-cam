@@ -69,7 +69,7 @@ public class AuthenAPI
         return null;
     }
 
-    public async Task SendHeartbeat(string token)
+    public async Task<int> SendHeartbeat(string token)
     {
         var data = new Request
         {
@@ -86,11 +86,14 @@ public class AuthenAPI
         if (response.IsSuccessStatusCode)
         {
             await Console.Out.WriteLineAsync("Heartbeat successful.");
+            return 0;
         }
         else
         {
             await Console.Out.WriteLineAsync("Heartbeat failed.");
+            
         }
+        return -1;
     }
 
 }

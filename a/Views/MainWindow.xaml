@@ -26,6 +26,7 @@
         </TabItem.Header>
         <view:HomeView DataContext="{Binding HomeViewModel}"/>
       </TabItem>
+      
       <TabItem>
         <TabItem.Header>
           <StackPanel Width="auto" Height="auto">
@@ -35,6 +36,7 @@
           </StackPanel>
         </TabItem.Header>
       </TabItem>
+      
       <TabItem>
         <TabItem.Header>
           <StackPanel Width="auto" Height="auto">
@@ -44,6 +46,7 @@
           </StackPanel>
         </TabItem.Header>
       </TabItem>
+      
       <TabItem>
         <TabItem.Header>
           <StackPanel Width="auto" Height="auto">
@@ -52,7 +55,9 @@
             <TextBlock HorizontalAlignment="Center" Text="Settings" />
           </StackPanel>
         </TabItem.Header>
+        <view:SettingView DataContext="{Binding SettingViewModel}"/>
       </TabItem>
+      
       <TabItem>
         <TabItem.Header>
           <StackPanel Width="auto" Height="auto">
