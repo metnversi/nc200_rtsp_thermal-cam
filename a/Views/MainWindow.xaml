@@ -7,7 +7,6 @@
         xmlns:local="clr-namespace:a"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel, IsDesignTimeCreatable=False}"
         Style="{StaticResource MaterialDesignWindow}"
         Title="Demo App" Height="600" Width="950">
   <Grid>
@@ -24,17 +23,7 @@
             <TextBlock HorizontalAlignment="Center" Text="Home" />
           </StackPanel>
         </TabItem.Header>
-        <view:HomeView DataContext="{Binding HomeViewModel}"/>
-      </TabItem>
-      
-      <TabItem>
-        <TabItem.Header>
-          <StackPanel Width="auto" Height="auto">
-            <materialDesign:PackIcon Width="24" Height="24" 
-                                     HorizontalAlignment="Center" Kind="Bell" />
-            <TextBlock HorizontalAlignment="Center" Text="Alarm" />
-          </StackPanel>
-        </TabItem.Header>
+        <view:HomeView x:Name="HomeView"/>
       </TabItem>
       
       <TabItem>
@@ -45,29 +34,9 @@
             <TextBlock HorizontalAlignment="Center" Text="Data" />
           </StackPanel>
         </TabItem.Header>
-        <view:DataView DataContext="{Binding DataViewModel}"/>
+        <view:DataView x:Name="DataView"/>
       </TabItem>
       
-      <TabItem>
-        <TabItem.Header>
-          <StackPanel Width="auto" Height="auto">
-            <materialDesign:PackIcon Width="24" Height="24" 
-                        HorizontalAlignment="Center" Kind="Settings" />
-            <TextBlock HorizontalAlignment="Center" Text="Settings" />
-          </StackPanel>
-        </TabItem.Header>
-        <view:SettingView DataContext="{Binding SettingViewModel}"/>
-      </TabItem>
-      
-      <TabItem>
-        <TabItem.Header>
-          <StackPanel Width="auto" Height="auto">
-            <materialDesign:PackIcon Width="24" Height="24" 
-                  HorizontalAlignment="Center" Kind="About" />
-            <TextBlock HorizontalAlignment="Center" Text="About" />
-          </StackPanel>
-        </TabItem.Header>
-      </TabItem>
     </TabControl>
 
   </Grid>

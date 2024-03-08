@@ -1,5 +1,7 @@
 ﻿using System.Windows.Input;
 
+using a.ViewModels;
+
 namespace a;
 
 /// <summary>
@@ -7,11 +9,12 @@ namespace a;
 /// </summary>
 public partial class MainWindow
 {
-    public MainWindow(MainWindowViewModel viewModel)
+    public MainWindow(HomeViewModel hvm, DataViewModel dvm)
     {
-        DataContext = viewModel;
+        
         InitializeComponent();
-
+        HomeView.DataContext = hvm;
+        DataView.DataContext = dvm;
         CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, OnClose));
     }
 

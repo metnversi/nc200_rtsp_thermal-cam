@@ -45,10 +45,9 @@ public partial class App : Application
         .ConfigureServices((hostContext, services) =>
         {
             services.AddSingleton<MainWindow>();
-            services.AddSingleton<MainWindowViewModel>();
-            services.AddSingleton<ConnectViewModel>();
             services.AddSingleton<HomeViewModel>();
             services.AddSingleton<DataViewModel>();
+            services.AddSingleton<ConnectViewModel>();
             
 
             services.AddSingleton<WeakReferenceMessenger>();
