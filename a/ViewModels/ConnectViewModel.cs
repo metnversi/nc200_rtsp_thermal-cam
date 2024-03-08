@@ -47,7 +47,11 @@ public partial class ConnectViewModel : ObservableObject
         var camClient = factory.Create(Ip, Username, Password);
         var camViewModel = await CamViewModel.CreateAsync(camClient);
         var camView = new CamView { DataContext = camViewModel };
-        HomeViewModel.Panels.Add(camView);
+
+        Application.Current.Dispatcher.Invoke(() =>
+        {
+            HomeViewModel.Panels.Add(camView);
+        });
     }
 
     

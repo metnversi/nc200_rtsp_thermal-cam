@@ -13,7 +13,6 @@ namespace a.ViewModels;
 
 public partial class ChartViewModel : ObservableObject
 {
-    private Timer timer;
     [ObservableProperty]
     private SeriesCollection _seriesCollection;
     [ObservableProperty]

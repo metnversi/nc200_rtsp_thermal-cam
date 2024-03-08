@@ -16,19 +16,17 @@ public partial class CamViewModel : ObservableObject
     public Media media;
     public Media media2;
     public MediaPlayer Player { get; private set; }
-    public DataViewModel DataViewModel { get; set;}
     public string? ipAddress;
 
     public CamViewModel(HttpCamClient camClient)
     {
-        DataViewModel = new DataViewModel();
         Cam = camClient;
         ipAddress = Cam.Url; 
     }
 
-    public static async Task<CamViewModel> CreateAsync(HttpCamClient camClient)
+    public static async Task<CamViewModel> CreateAsync(HttpCamClient client)
     {
-        var camViewModel = new CamViewModel(camClient);
+        var camViewModel = new CamViewModel(client);
         await camViewModel.Capture();
         return camViewModel;
     }
@@ -39,14 +37,17 @@ public partial class CamViewModel : ObservableObject
         {
             await Cam.A.Login();
             var (irRtspUrl, vlRtspUrl) = await Cam.F.OpenStream();
-            
+            var (min, max) = await Cam.F.GetRealTimeTemp();
+            var temp = new Temp { IpAddress = "1", MinTemp = "6", MaxTemp = "7" };
+            Messenger.Instance.OnTempAdded(temp);
             var libVLC = new LibVLC();
             var media = new Media(libVLC, irRtspUrl, FromType.FromLocation);
-            media.AddOption(":network-caching=100");  
+            media.AddOption(":network-caching=100");
             media2 = new Media(libVLC, vlRtspUrl, FromType.FromLocation);
-            media2.AddOption(":network-caching=100");  
+            media2.AddOption(":network-caching=100");
             Player = new MediaPlayer(media);
             Player.Play();
         });
     }
 }
+
