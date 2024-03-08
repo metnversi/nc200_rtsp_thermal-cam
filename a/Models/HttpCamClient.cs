@@ -14,8 +14,8 @@ public class HttpCamClient
     public FunctionalAPI F { get; private set; }
     public ConfigAPI C { get; private set; }
     public AuthenAPI A { get; private set; }
-    private string? _username;
-    private string? _password;
+    private readonly string? _username;
+    private readonly string? _password;
 
     public HttpCamClient(string url, string username, string password)
     {
@@ -26,10 +26,22 @@ public class HttpCamClient
         _client.DefaultRequestHeaders.Add("Accept-Charset", "GBK,utf-8;q=0.7,*;q=0.3");
         _client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.122 Safari/537.36");
         A = new AuthenAPI(_client, url, username, password);
-        _username = username;
-        _password = password;
-        Url = "http://" + url + "/getmsginfo";
-        F = new FunctionalAPI(_client, url, A);
-        C = new ConfigAPI(_client, url, A);
+        if (username != null || password != null)
+        {
+            _username = username;
+            _password = password;
+            Url = "http://" + url + "/getmsginfo";
+            F = new FunctionalAPI(_client, url, A);
+            C = new ConfigAPI(_client, url, A);
+        }
+        else Url = url;
+    }
+}
+
+public class HttpCamClientFactory
+{
+    public HttpCamClient Create(string ip, string username, string password)
+    {
+        return new HttpCamClient(ip, username, password);
     }
 }

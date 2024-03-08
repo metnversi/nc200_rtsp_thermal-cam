@@ -50,12 +50,6 @@ public partial class ConnectViewModel : ObservableObject
         HomeViewModel.Panels.Add(camView);
     }
 
-    public class HttpCamClientFactory
-    {
-        public HttpCamClient Create(string ip, string username, string password)
-        {
-            return new HttpCamClient(ip, username, password);
-        }
-    }
+    
 }
 

@@ -1,9 +1,9 @@
 ﻿using System.Collections.ObjectModel;
-
+using Timer = System.Threading.Timer;
 using a.Models;
 using System.Timers;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Timer = System.Timers.Timer;
+
 using LiveCharts;
 using LiveCharts.Wpf;
 using System.Diagnostics;
@@ -13,9 +13,7 @@ namespace a.ViewModels;
 
 public partial class ChartViewModel : ObservableObject
 {
-    
-    public Timer timer;
-
+    private Timer timer;
     [ObservableProperty]
     private SeriesCollection _seriesCollection;
     [ObservableProperty]
@@ -49,9 +47,9 @@ public partial class ChartViewModel : ObservableObject
             }
         };
 
-        timer = new Timer(1000); 
-        timer.Elapsed += UpdateMemoryChart;
-        timer.Start();
+        //timer = new Timer(1000); 
+        //timer.Elapsed += UpdateMemoryChart;
+        //timer.Start();
     }
 
     private void UpdateMemoryChart(object? sender, ElapsedEventArgs e)
