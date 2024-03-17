@@ -1,7 +1,4 @@
-﻿using System.Windows.Controls;
-using a.ViewModels;
-
-namespace a.Views;
+﻿namespace a.Views;
 
 
 /// <summary>

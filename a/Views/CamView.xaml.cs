@@ -10,6 +10,5 @@ public partial class CamView
     public CamView()
     {
         InitializeComponent();
-        //DataContext = new CamViewModel();
     }
 }

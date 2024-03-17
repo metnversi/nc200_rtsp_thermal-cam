@@ -18,14 +18,14 @@
     </Grid.RowDefinitions>
     <materialDesign:Card Grid.Row="2"  Background="Black"
                          Foreground="White" Margin="241,66,15,10">
-      <!--<TextBlock FontSize="10" Text="{Binding }" HorizontalAlignment="Center"
-                 VerticalAlignment="Center"/>-->
+      <TextBlock FontSize="10" Text="{Binding IpAddress}" HorizontalAlignment="Center"
+                 VerticalAlignment="Center"/>
     </materialDesign:Card>
     <DockPanel Background="Black" Margin="15,20,15,60" Grid.RowSpan="3">
       <libvlc:VideoView x:Name="view" DockPanel.Dock="Top" MediaPlayer="{Binding Player}"/>
     </DockPanel>
-    <CheckBox Grid.Row="2" Background="Orange" Margin="15,60,266,4" 
+    <!--<CheckBox Grid.Row="2" Background="Orange" Margin="15,60,266,4" 
     x:Name="MaterialDesignFilledTextBoxEnabledComboBox"
-    Content="Temp Camera" Foreground="White" IsChecked="{Binding IsTemp}"/>
+    Content="Temp Camera" Foreground="White" IsChecked="{Binding IsTemp}"/>-->
   </Grid>
 </UserControl>

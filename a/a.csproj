@@ -36,6 +36,7 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="EasyModbusTCP.NetCore" />
     <PackageReference Include="LibVLCSharp" />
     <PackageReference Include="LibVLCSharp.wpf" />
     <PackageReference Include="LiveCharts.Wpf.NetCore3" />

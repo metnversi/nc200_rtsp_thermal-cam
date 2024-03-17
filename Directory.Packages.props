@@ -23,6 +23,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageVersion>
+    <PackageVersion Include="EasyModbusTCP.NetCore" Version="1.0.0" />
     <PackageVersion Include="LibVLCSharp" Version="3.8.2" />
     <PackageVersion Include="LibVLCSharp.wpf" Version="3.8.2" />
     <PackageVersion Include="LiveCharts.Wpf.NetCore3" Version="0.9.8" />

@@ -9,9 +9,8 @@ namespace a.Views;
 /// </summary>
 public partial class ConnectView 
 {
-    public ConnectView(HomeViewModel homeViewModel)
+    public ConnectView()
     {
         InitializeComponent();
-        DataContext = new ConnectViewModel(homeViewModel);
     }
 }

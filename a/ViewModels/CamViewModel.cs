@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows;
+﻿using System.Windows;
 
 using a.Models;
 
@@ -16,12 +15,14 @@ public partial class CamViewModel : ObservableObject
     public Media media;
     public Media media2;
     public MediaPlayer Player { get; private set; }
+
+    [ObservableProperty]
     public string? ipAddress;
 
     public CamViewModel(HttpCamClient camClient)
     {
         Cam = camClient;
-        ipAddress = Cam.Url; 
+        IpAddress = camClient.Url; 
     }
 
     public static async Task<CamViewModel> CreateAsync(HttpCamClient client)
@@ -37,9 +38,16 @@ public partial class CamViewModel : ObservableObject
         {
             await Cam.A.Login();
             var (irRtspUrl, vlRtspUrl) = await Cam.F.OpenStream();
-            var (min, max) = await Cam.F.GetRealTimeTemp();
-            var temp = new Temp { IpAddress = "1", MinTemp = "6", MaxTemp = "7" };
+            var (url, min, max) = await Cam.F.GetRealTimeTemp();
+            var temp = new Temp 
+            { 
+                IpAddress = url, 
+                MinTemp = min, 
+                MaxTemp = max, 
+                TimeReading = DateTime.Now 
+            };
             Messenger.Instance.OnTempAdded(temp);
+
             var libVLC = new LibVLC();
             var media = new Media(libVLC, irRtspUrl, FromType.FromLocation);
             media.AddOption(":network-caching=100");

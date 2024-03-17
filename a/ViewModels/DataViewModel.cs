@@ -27,4 +27,22 @@ public partial class DataViewModel : ObservableObject
         });
     }
 
+    //[RelayCommand]
+    //private async Task OnRefresh()
+    //{
+    //    CancellationTokenSource cts = new();
+    //    Interlocked.Exchange(ref _refreshCancellation, cts)?.Cancel();
+    //    try
+    //    {
+    //        Rentals.Clear();
+    //        await Task.Delay(0, cts.Token);
+    //        // await foreach (var rental in Context.Rentals.Where(x => x.ReturnedOn == null).AsAsyncEnumerable().WithCancellation(cts.Token))
+    //        // {
+    //        //     Rentals.Add(RentalViewModelFactory(rental));
+    //        // }
+    //    }
+    //    catch(OperationCanceledException)
+    //    { }
+    //}
+
 }

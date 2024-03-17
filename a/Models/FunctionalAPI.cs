@@ -13,6 +13,7 @@ public class FunctionalAPI
     private AuthenAPI _authenAPI;
 
     public string Url { get; private set; }
+
     public FunctionalAPI(HttpClient client,string url, AuthenAPI authenAPI)
     {
         _client = client;
@@ -172,7 +173,7 @@ public class FunctionalAPI
     }
 
 
-    public async Task<(string?, string?)> GetRealTimeTemp()
+    public async Task<(string?, string?, string?)> GetRealTimeTemp()
     {
         var requestObject = new Request
         {
@@ -193,13 +194,13 @@ public class FunctionalAPI
             var max_temp = jsonObject["message"]["global_max_temp"].ToString();
 
             await Console.Out.WriteLineAsync($"Min Temp: {min_temp}, Max Temp: {max_temp}");
-            return (min_temp, max_temp);
+            return (Url, min_temp, max_temp);
 
         }
         else
         {
             Console.WriteLine($"HTTP request failed: {response.StatusCode}");
-            return (null, null);
+            return (null, null, null);
         }
     }
 

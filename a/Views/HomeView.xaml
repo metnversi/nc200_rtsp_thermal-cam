@@ -5,10 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:viewModels="clr-namespace:a.ViewModels"
              d:DataContext="{d:DesignInstance Type=viewModels:HomeViewModel, IsDesignTimeCreatable=False}"
-             xmlns:local="clr-namespace:a.Views" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:a.Views" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="344" d:DesignWidth="800"
              Background="Black">
+  <UserControl.Resources>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+  </UserControl.Resources>
   <DockPanel LastChildFill="True" >
     <Grid>
       <Grid.ColumnDefinitions>
@@ -51,6 +55,11 @@
           </Style>
         </ItemsControl.ItemContainerStyle>
     </ItemsControl>
+      <ContentControl Grid.Row="1" Grid.RowSpan="4" 
+                      Grid.Column="3" Grid.ColumnSpan="3"
+                      Margin="15,0,15,0"
+                      Content="{Binding ConnectView}" 
+                      Visibility="{Binding IsConnectViewOpen, Converter={StaticResource BooleanToVisibilityConverter}}" />
     </Grid>
   </DockPanel>
 </UserControl>

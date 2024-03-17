@@ -13,5 +13,4 @@ public partial class Temp : ObservableObject
     public string? MinTemp { get; set; }
     public string? MaxTemp { get; set; }
 
-    
 }

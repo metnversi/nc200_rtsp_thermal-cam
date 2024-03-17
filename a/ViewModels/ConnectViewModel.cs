@@ -31,13 +31,11 @@ public partial class ConnectViewModel : ObservableObject
         Username = "admin";
         Password = "admin123";
     }
+    
     [RelayCommand]
-    private void CloseWindow(object parameter)
+    private void CloseWindow()
     {
-        if (parameter is Window window)
-        {
-            window.Close();
-        }
+        HomeViewModel.HideConnectView();
     }
 
     [RelayCommand]

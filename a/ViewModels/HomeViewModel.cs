@@ -10,32 +10,32 @@ namespace a.ViewModels;
 
 public partial class HomeViewModel : ObservableObject
 {
+    public ConnectView ConnectView { get; private set; }
     public ConnectViewModel ConnectViewModel { get; }
     public ObservableCollection<CamView> Panels { get; }
+
+    private bool _isConnectViewOpen;
+    public bool IsConnectViewOpen
+    {
+        get => _isConnectViewOpen;
+        set => SetProperty(ref _isConnectViewOpen, value);
+    }
+    
     
     public HomeViewModel()
     {
         ConnectViewModel = new ConnectViewModel(this);
+        ConnectView = new ConnectView { DataContext = ConnectViewModel };
         Panels = new ObservableCollection<CamView>();
     }
-
     [RelayCommand]
     public void Show()
     {
-        Application.Current.Dispatcher.Invoke(new Action(() =>
-        {
-            var con = new ConnectView(this);
-            var window = new Window
-            {
-                Content = con,
-                SizeToContent = SizeToContent.WidthAndHeight,
-                WindowStyle = WindowStyle.None,
-                ResizeMode = ResizeMode.NoResize,
-                WindowStartupLocation = WindowStartupLocation.CenterScreen
-            };
-            window.ShowDialog();
-        }));
+        IsConnectViewOpen = true;
     }
-    
+    public void HideConnectView()
+    {
+        IsConnectViewOpen = false;
+    }
 
 }
