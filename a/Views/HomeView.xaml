@@ -7,11 +7,13 @@
              d:DataContext="{d:DesignInstance Type=viewModels:HomeViewModel, IsDesignTimeCreatable=False}"
              xmlns:local="clr-namespace:a.Views" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:model="clr-namespace:a.Models"
              mc:Ignorable="d" 
              d:DesignHeight="344" d:DesignWidth="800"
              Background="Black">
   <UserControl.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <model:DivideByThreeConverter x:Key="DivideByThreeConverter" />
   </UserControl.Resources>
   <DockPanel LastChildFill="True" >
     <Grid>
@@ -40,26 +42,30 @@
               Background="#005BAA" Margin="5"
               Height="30" Content="Add" Foreground="White"/>
 
-      <ItemsControl Grid.Row="1" Grid.Column="0" 
-                  Grid.RowSpan="6" Grid.ColumnSpan="12" 
-                  ItemsSource="{Binding Panels}"
-                    Margin="10">
-        <ItemsControl.ItemsPanel>
+      <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.RowSpan="6" Grid.ColumnSpan="12" Margin="10">
+        <ItemsControl ItemsSource="{Binding Panels}">
+          <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-                <WrapPanel Orientation="Horizontal"/>
+              <UniformGrid Columns="4" />
             </ItemsPanelTemplate>
-        </ItemsControl.ItemsPanel>
-        <ItemsControl.ItemContainerStyle>
-          <Style TargetType="local:CamView">
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-          </Style>
-        </ItemsControl.ItemContainerStyle>
-    </ItemsControl>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemContainerStyle>
+            <Style TargetType="local:CamView">
+              <Setter Property="HorizontalAlignment" Value="Stretch"/>
+              <Setter Property="Height" Value="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=ItemsControl}, Converter={StaticResource DivideByThreeConverter}}" />
+            </Style>
+          </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
+      </ScrollViewer>
       <ContentControl Grid.Row="1" Grid.RowSpan="4" 
                       Grid.Column="3" Grid.ColumnSpan="3"
                       Margin="15,0,15,0"
                       Content="{Binding ConnectView}" 
                       Visibility="{Binding IsConnectViewOpen, Converter={StaticResource BooleanToVisibilityConverter}}" />
+      <!--<local:ConnectView Grid.Row="1" Grid.RowSpan="4" 
+                         Grid.Column="3" Grid.ColumnSpan="3"
+                         Margin="10,0,10,0"
+                         Visibility="{Binding IsConnectViewOpen, Converter={StaticResource BooleanToVisibilityConverter}}" />-->
     </Grid>
   </DockPanel>
 </UserControl>

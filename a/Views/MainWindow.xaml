@@ -10,7 +10,15 @@
         Style="{StaticResource MaterialDesignWindow}"
         Title="Demo App" Height="600" Width="950">
   <Grid>
-    <TabControl materialDesign:NavigationRailAssist.ShowSelectionBackground="True"
+    <!--<Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>-->
+    <!--<ToggleButton x:Name="ToggleNav" Width="20" Grid.Column="0" VerticalAlignment="Top" Content="&#x25B6;" 
+                  Checked="ToggleNav_Checked" Unchecked="ToggleNav_Unchecked"/>-->
+
+    <TabControl  
+                x:Name="NavTabControl" materialDesign:NavigationRailAssist.ShowSelectionBackground="True"
                 SnapsToDevicePixels="True"
                 Style="{StaticResource MaterialDesignNavigationRailTabControl}"
                 TabStripPlacement="Left">

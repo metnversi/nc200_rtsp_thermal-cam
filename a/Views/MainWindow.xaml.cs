@@ -22,4 +22,16 @@ public partial class MainWindow
     {
         Close();
     }
+
+    //private void ToggleNav_Checked(object sender, RoutedEventArgs e)
+    //{
+    //    NavTabControl.Width = 200;
+    //    ToggleNav.Content = "\u25C0"; 
+    //}
+
+    //private void ToggleNav_Unchecked(object sender, RoutedEventArgs e)
+    //{
+    //    NavTabControl.Width = 0;
+    //    ToggleNav.Content = "\u25B6"; 
+    //}
 }

@@ -1,11 +1,9 @@
-﻿using a.Models;
-
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 using System.Net.Http;
 using System.Text;
 
-namespace b4;
+namespace a.Models;
 
 public static class HttpUtility
 {

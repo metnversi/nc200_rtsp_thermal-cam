@@ -15,11 +15,12 @@ public partial class CamViewModel : ObservableObject
     public Media media;
     public Media media2;
     public MediaPlayer Player { get; private set; }
+    public MediaPlayer Player2 { get; private set; }
 
     [ObservableProperty]
     public string? ipAddress;
 
-    public CamViewModel(HttpCamClient camClient)
+    public CamViewModel(HttpCamClient camClient) // dont init the context for constructor, aaaah
     {
         Cam = camClient;
         IpAddress = camClient.Url; 
@@ -39,14 +40,35 @@ public partial class CamViewModel : ObservableObject
             await Cam.A.Login();
             var (irRtspUrl, vlRtspUrl) = await Cam.F.OpenStream();
             var (url, min, max) = await Cam.F.GetRealTimeTemp();
-            var temp = new Temp 
-            { 
-                IpAddress = url, 
-                MinTemp = min, 
-                MaxTemp = max, 
-                TimeReading = DateTime.Now 
+            var uri = new Uri(url);
+            var ipAddress = uri.Host;
+            var timer = new System.Timers.Timer(1000);
+            timer.Elapsed += async (sender, e) => 
+            {
+                var temp = new Temp
+                {
+                    IpAddress = ipAddress,
+                    MinTemp = min,
+                    MaxTemp = max,
+                    TimeReading = DateTime.Now
+                };
+                Messenger.Instance.OnTempAdded(temp);
+
+                using (var context = new CamDataContext())
+                {
+                    var camera = await context.Cams.FindAsync(ipAddress);
+                    if (camera == null)
+                    {
+                        camera = new Cam { IpAddress = ipAddress, CamName = "YourCamName" };
+                        context.Cams.Add(camera);
+                        await context.SaveChangesAsync();
+                    }
+                    context.Temps.Add(temp);
+                    await context.SaveChangesAsync();
+                }
             };
-            Messenger.Instance.OnTempAdded(temp);
+            timer.AutoReset = true;
+            timer.Enabled = true;
 
             var libVLC = new LibVLC();
             var media = new Media(libVLC, irRtspUrl, FromType.FromLocation);
@@ -54,7 +76,9 @@ public partial class CamViewModel : ObservableObject
             media2 = new Media(libVLC, vlRtspUrl, FromType.FromLocation);
             media2.AddOption(":network-caching=100");
             Player = new MediaPlayer(media);
+            //Player2 = new MediaPlayer(media2);
             Player.Play();
+            //Player2.Play();
         });
     }
 }

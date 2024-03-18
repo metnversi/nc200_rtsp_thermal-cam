@@ -1,15 +1,16 @@
-﻿using a.Models;
+﻿using System.Windows;
+using System.Windows.Threading;
+
 using a.ViewModels;
 
 using CommunityToolkit.Mvvm.Messaging;
+
 using MaterialDesignThemes.Wpf;
+
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Windows;
-using System.Windows.Threading;
-
-using static a.ViewModels.ConnectViewModel;
 
 namespace a;
 
@@ -27,7 +28,12 @@ public partial class App : Application
     private static async Task MainAsync(string[] args)
     {
         using IHost host = CreateHostBuilder(args).Build();
-        await host.StartAsync().ConfigureAwait(true);
+        host.Start();
+        using (var scope = host.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
+        using (CamDataContext context = scope.ServiceProvider.GetRequiredService<CamDataContext>())
+        {
+            context.Database.Migrate();
+        }
 
         App app = new();
         app.InitializeComponent();
@@ -48,8 +54,9 @@ public partial class App : Application
             services.AddSingleton<HomeViewModel>();
             services.AddSingleton<DataViewModel>();
             services.AddSingleton<ConnectViewModel>();
-            
 
+            services.AddDbContext<CamDataContext>(options =>
+                options.UseSqlite("Data Source=cam.db"));
             services.AddSingleton<WeakReferenceMessenger>();
             services.AddSingleton<IMessenger, WeakReferenceMessenger>(provider => provider.GetRequiredService<WeakReferenceMessenger>());
 

@@ -46,6 +46,7 @@
           <DataGridTextColumn Header="Max Temp" Binding="{Binding MaxTemp}" Width="Auto"/>
         </DataGrid.Columns>
       </DataGrid>
+      
     </DockPanel>
 
   </Grid>

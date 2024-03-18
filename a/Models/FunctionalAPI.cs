@@ -1,11 +1,10 @@
 ﻿using System.Net.Http;
 
-using a.Models;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace b4;
+namespace a.Models;
 
 public class FunctionalAPI
 {

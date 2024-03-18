@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 
-namespace b4;
+namespace a.Models;
 
 public class ConfigAPI
 {

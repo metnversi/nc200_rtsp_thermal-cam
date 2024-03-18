@@ -1,4 +1,4 @@
-﻿using a.Models;
+﻿
 
 using Newtonsoft.Json.Linq;
 
@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace b4;
+namespace a.Models;
 
 public class AuthenAPI
 {     

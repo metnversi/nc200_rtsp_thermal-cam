@@ -1,6 +1,4 @@
-﻿using System.Windows.Controls;
-
-namespace a.Views;
+﻿namespace a.Views;
 
 /// <summary>
 /// Interaction logic for CamView.xaml
