@@ -76,9 +76,9 @@ public partial class CamViewModel : ObservableObject
             media2 = new Media(libVLC, vlRtspUrl, FromType.FromLocation);
             media2.AddOption(":network-caching=100");
             Player = new MediaPlayer(media);
-            //Player2 = new MediaPlayer(media2);
+            Player2 = new MediaPlayer(media2);
             Player.Play();
-            //Player2.Play();
+            Player2.Play();
         });
     }
 }
