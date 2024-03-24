@@ -10,42 +10,73 @@
         Style="{StaticResource MaterialDesignWindow}"
         Title="Demo App" Height="600" Width="950">
   <Grid>
-    <!--<Grid.ColumnDefinitions>
-      <ColumnDefinition Width="Auto"/>
-      <ColumnDefinition Width="*"/>
-    </Grid.ColumnDefinitions>-->
-    <!--<ToggleButton x:Name="ToggleNav" Width="20" Grid.Column="0" VerticalAlignment="Top" Content="&#x25B6;" 
-                  Checked="ToggleNav_Checked" Unchecked="ToggleNav_Unchecked"/>-->
+    <Grid.RowDefinitions>
+      <RowDefinition Height="60"/>
+      <RowDefinition/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="200"/>
+      <ColumnDefinition/>
+    </Grid.ColumnDefinitions>
+      <Image Source="/Views/logo.png" Height="30" Width="200"
+           Grid.Column="0" Margin="5"/>
 
-    <TabControl  
-                x:Name="NavTabControl" materialDesign:NavigationRailAssist.ShowSelectionBackground="True"
-                SnapsToDevicePixels="True"
-                Style="{StaticResource MaterialDesignNavigationRailTabControl}"
-                TabStripPlacement="Left">
-      
+      <TabControl Grid.Row="0" Grid.RowSpan="2" VerticalContentAlignment="Top" 
+                materialDesign:ColorZoneAssist.Mode="PrimaryMid"
+                Grid.Column="1">
       <TabItem>
         <TabItem.Header>
-          <StackPanel Width="auto" Height="auto">
-            <materialDesign:PackIcon Width="24" Height="24" 
-              HorizontalAlignment="Center" Kind="Home" />
-            <TextBlock HorizontalAlignment="Center" Text="Home" />
+          <StackPanel Orientation="Horizontal" Width="160" Height="auto">
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+              </Grid.ColumnDefinitions>
+              <materialDesign:PackIcon Width="24" Height="24" HorizontalAlignment="Center" Kind="Cctv" 
+                                      Grid.Column="0"
+                                      Margin="0,0,5,0"/>
+              <TextBlock HorizontalAlignment="Center" Text="Live View" 
+                        Grid.Column="1"
+                        Margin="5,2,0,0"/>
+            </Grid>
           </StackPanel>
         </TabItem.Header>
-        <view:HomeView x:Name="HomeView"/>
+        <view:HomeView x:Name="HomeView" Margin="-200,0,0,0"/>
       </TabItem>
-      
+
       <TabItem>
         <TabItem.Header>
-          <StackPanel Width="auto" Height="auto">
-            <materialDesign:PackIcon Width="24" Height="24" 
-                      HorizontalAlignment="Center" Kind="Database" />
-            <TextBlock HorizontalAlignment="Center" Text="Data" />
+          <StackPanel Orientation="Horizontal" Width="160" Height="auto">
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+              </Grid.ColumnDefinitions>
+              <materialDesign:PackIcon Width="24" Height="24" HorizontalAlignment="Center" Kind="Cctv" 
+                            Grid.Column="0"
+                            Margin="0,0,5,0"/>
+              <TextBlock HorizontalAlignment="Center" Text="Live View" 
+              Grid.Column="1"
+              Margin="5,2,0,0"/>
+            </Grid>
           </StackPanel>
         </TabItem.Header>
-        <view:DataView x:Name="DataView"/>
+        <view:DataView x:Name="DataView" Margin="-200,0,0,0"/>
+
       </TabItem>
-      
+
+
+
+
+
+
+
+
+
+
     </TabControl>
+    <!--</ToolBar>
+    </ToolBarTray>-->
 
   </Grid>
 </Window>

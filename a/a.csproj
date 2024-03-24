@@ -30,7 +30,9 @@
 
   <ItemGroup>
     <ApplicationDefinition Remove="App.xaml" />
+    <None Remove="Views\logo.png" />
     <Content Include="Resources\AppIcon.ico" />
+    <Resource Include="Views\logo.png" />
     <Page Include="App.xaml" />
   </ItemGroup>
 
