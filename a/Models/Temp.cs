@@ -11,19 +11,27 @@ public partial class Temp : ObservableObject
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
-    [ForeignKey("Cam")]
     public string? IpAddress { get; set; }
-    public DateTime TimeReading { get; set; }
+
+    public DateTime Time { get; set; }
+
     public string? MinTemp { get; set; }
+
     public string? MaxTemp { get; set; }
 }
 
 
-public class Cam
+public partial class Cam : ObservableObject
 {
-    [Key]
-    public string? IpAddress { get; set; }
-    public string? CamName { get; set; }
+    public int Id { get; set; }
+    [ObservableProperty]
+    public string? _ipAddress;
+    [ObservableProperty]
+    public string? _username;
+    [ObservableProperty]
+    public string? _password;
+    [ObservableProperty]
+    public bool? _isSelected;
     public ICollection<Temp>? Temps { get; set; }
 }
 

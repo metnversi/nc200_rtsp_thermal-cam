@@ -3,7 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using a.Models;
+using a;
 
 #nullable disable
 
@@ -19,13 +19,23 @@ namespace a.Migrations
 
             modelBuilder.Entity("a.Models.Cam", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("IpAddress")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("CamName")
+                    b.Property<bool?>("IsSelected")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Password")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("IpAddress");
+                    b.Property<string>("Username")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Cams");
                 });
@@ -36,8 +46,8 @@ namespace a.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("CamIpAddress")
-                        .HasColumnType("TEXT");
+                    b.Property<int?>("CamId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("IpAddress")
                         .HasColumnType("TEXT");
@@ -48,12 +58,12 @@ namespace a.Migrations
                     b.Property<string>("MinTemp")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("TimeReading")
+                    b.Property<DateTime>("Time")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CamIpAddress");
+                    b.HasIndex("CamId");
 
                     b.ToTable("Temps");
                 });
@@ -62,7 +72,7 @@ namespace a.Migrations
                 {
                     b.HasOne("a.Models.Cam", null)
                         .WithMany("Temps")
-                        .HasForeignKey("CamIpAddress");
+                        .HasForeignKey("CamId");
                 });
 
             modelBuilder.Entity("a.Models.Cam", b =>

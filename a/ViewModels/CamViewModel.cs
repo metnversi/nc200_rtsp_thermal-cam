@@ -50,7 +50,7 @@ public partial class CamViewModel : ObservableObject
                     IpAddress = ipAddress,
                     MinTemp = min,
                     MaxTemp = max,
-                    TimeReading = DateTime.Now
+                    Time = DateTime.Now
                 };
                 Messenger.Instance.OnTempAdded(temp);
 
@@ -59,7 +59,7 @@ public partial class CamViewModel : ObservableObject
                     var camera = await context.Cams.FindAsync(ipAddress);
                     if (camera == null)
                     {
-                        camera = new Cam { IpAddress = ipAddress, CamName = "YourCamName" };
+                        camera = new Cam { IpAddress = ipAddress};
                         context.Cams.Add(camera);
                         await context.SaveChangesAsync();
                     }
@@ -76,9 +76,9 @@ public partial class CamViewModel : ObservableObject
             media2 = new Media(libVLC, vlRtspUrl, FromType.FromLocation);
             media2.AddOption(":network-caching=100");
             Player = new MediaPlayer(media);
-            Player2 = new MediaPlayer(media2);
             Player.Play();
-            Player2.Play();
+            //Player2 = new MediaPlayer(media2);
+            //Player2.Play();
         });
     }
 }
