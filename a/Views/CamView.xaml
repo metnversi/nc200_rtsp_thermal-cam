@@ -9,33 +9,24 @@
              xmlns:libvlc="clr-namespace:LibVLCSharp.WPF;assembly=LibVLCSharp.WPF"
              d:DataContext="{d:DesignInstance Type=viewModels:CamViewModel, IsDesignTimeCreatable=False}"
              mc:Ignorable="d"
-             Background="#005BAA" Height="350" Width="420">
-<!--<UserControl.Resources>
-  <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-</UserControl.Resources>-->
+             Background="Transparent" Height="350" Width="420">
+
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition/>
       <RowDefinition/>
       <RowDefinition/>
     </Grid.RowDefinitions>
-    <materialDesign:Card Grid.Row="2"  Background="Black"
+    <!--<materialDesign:Card Grid.Row="2"  Background="Black"
                          Foreground="White" Margin="241,66,15,10">
       <TextBlock FontSize="10" Text="{Binding IpAddress}" HorizontalAlignment="Center"
                  VerticalAlignment="Center"/>
     </materialDesign:Card>
-    <!--<ToggleButton x:Name="SwitchButton" Content="Switch" Grid.Row="2" Margin="15,28,451,-28"  />-->
-    <DockPanel Background="Black" Margin="15,20,15,60" Grid.RowSpan="3">
+    <DockPanel Background="Black" Margin="15,20,15,60" Grid.RowSpan="3">-->
 
       <libvlc:VideoView x:Name="view" DockPanel.Dock="Top" MediaPlayer="{Binding Player}"
-                 Panel.ZIndex="1"/>
+                 Panel.ZIndex="1" Grid.RowSpan="3" Margin="5"/>
 
-      <!--<libvlc:VideoView x:Name="view2" DockPanel.Dock="Top" MediaPlayer="{Binding Player2}"
-                 Panel.ZIndex="1"/>-->
-
-    </DockPanel>
-    <!--<CheckBox Grid.Row="2" Background="Orange" Margin="15,60,266,4" 
-    x:Name="MaterialDesignFilledTextBoxEnabledComboBox"
-    Content="Temp Camera" Foreground="White" IsChecked="{Binding IsTemp}"/>-->
+    <!--</DockPanel>-->
   </Grid>
 </UserControl>

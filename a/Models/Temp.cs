@@ -24,15 +24,20 @@ public partial class Temp : ObservableObject
 public partial class Cam : ObservableObject
 {
     public int Id { get; set; }
+
     [ObservableProperty]
     public string? _ipAddress;
+
     [ObservableProperty]
     public string? _username;
+
     [ObservableProperty]
     public string? _password;
+
     [ObservableProperty]
     public bool? _isSelected;
-    //public ICollection<Temp>? Temps { get; set; }
+
+    
 }
 
 

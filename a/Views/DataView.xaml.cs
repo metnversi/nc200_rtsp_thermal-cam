@@ -9,12 +9,5 @@ public partial class DataView
     {
         InitializeComponent();
     }
-
-//    private async void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
-//{
-//    if (DataContext is DataViewModel viewModel)
-//    {
-//        await viewModel.RefreshCommand.ExecuteAsync(null);
-//    }
 }
 

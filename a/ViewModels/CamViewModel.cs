@@ -6,6 +6,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 using LibVLCSharp.Shared;
 
+using Microsoft.EntityFrameworkCore;
+
 namespace a.ViewModels;
 
 public partial class CamViewModel : ObservableObject
@@ -42,7 +44,7 @@ public partial class CamViewModel : ObservableObject
             var (url, min, max) = await Cam.F.GetRealTimeTemp();
             var uri = new Uri(url);
             var ipAddress = uri.Host;
-            var timer = new System.Timers.Timer(1000);
+            var timer = new System.Timers.Timer(3000);
             timer.Elapsed += async (sender, e) => 
             {
                 var temp = new Temp
@@ -53,13 +55,12 @@ public partial class CamViewModel : ObservableObject
                     Time = DateTime.Now
                 };
                 Messenger.Instance.OnTempAdded(temp);
-
                 using (var context = new CamDataContext())
                 {
-                    var camera = await context.Cams.FindAsync(ipAddress);
+                    var camera = await context.Cams.FirstOrDefaultAsync(c => c.IpAddress == ipAddress);
                     if (camera == null)
                     {
-                        camera = new Cam { IpAddress = ipAddress};
+                        camera = new Cam { IpAddress = ipAddress };
                         context.Cams.Add(camera);
                         await context.SaveChangesAsync();
                     }
@@ -73,8 +74,8 @@ public partial class CamViewModel : ObservableObject
             var libVLC = new LibVLC();
             var media = new Media(libVLC, irRtspUrl, FromType.FromLocation);
             media.AddOption(":network-caching=100");
-            media2 = new Media(libVLC, vlRtspUrl, FromType.FromLocation);
-            media2.AddOption(":network-caching=100");
+            //media2 = new Media(libVLC, vlRtspUrl, FromType.FromLocation);
+            //media2.AddOption(":network-caching=100");
             Player = new MediaPlayer(media);
             Player.Play();
             //Player2 = new MediaPlayer(media2);
