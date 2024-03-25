@@ -32,7 +32,7 @@ public partial class Cam : ObservableObject
     public string? _password;
     [ObservableProperty]
     public bool? _isSelected;
-    public ICollection<Temp>? Temps { get; set; }
+    //public ICollection<Temp>? Temps { get; set; }
 }
 
 
