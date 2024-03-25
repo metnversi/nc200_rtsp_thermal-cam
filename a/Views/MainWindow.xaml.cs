@@ -9,12 +9,13 @@ namespace a;
 /// </summary>
 public partial class MainWindow
 {
-    public MainWindow(HomeViewModel hvm, DataViewModel dvm)
+    public MainWindow(HomeViewModel hvm, DataViewModel dvm, SetViewModel svm, EventViewModel evm)
     {
-        
         InitializeComponent();
         HomeView.DataContext = hvm;
         DataView.DataContext = dvm;
+        SetView.DataContext = svm;
+        EventView.DataContext = evm;
         CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, OnClose));
     }
 
@@ -22,16 +23,4 @@ public partial class MainWindow
     {
         Close();
     }
-
-    //private void ToggleNav_Checked(object sender, RoutedEventArgs e)
-    //{
-    //    NavTabControl.Width = 200;
-    //    ToggleNav.Content = "\u25C0"; 
-    //}
-
-    //private void ToggleNav_Unchecked(object sender, RoutedEventArgs e)
-    //{
-    //    NavTabControl.Width = 0;
-    //    ToggleNav.Content = "\u25B6"; 
-    //}
 }

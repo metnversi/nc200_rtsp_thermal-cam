@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using Timer = System.Threading.Timer;
 using a.Models;
 using System.Timers;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -8,32 +7,37 @@ using LiveCharts;
 using LiveCharts.Wpf;
 using System.Diagnostics;
 using System.Windows;
+using Timer = System.Timers.Timer;
 
 namespace a.ViewModels;
 
 public partial class ChartViewModel : ObservableObject
 {
+    public Timer timer;
     [ObservableProperty]
     private SeriesCollection _seriesCollection;
+
     [ObservableProperty]
     private SeriesCollection _memoryChartSeries;
+
     public ChartViewModel(ObservableCollection<Temp> data, ObservableCollection<string> ips)
     {
-        
         SeriesCollection = new SeriesCollection();
+
         foreach (var ip in ips)
         {
             var dataForId = data.Where(d => d.IpAddress == ip).ToList();
 
             LineSeries series = new LineSeries
             {
-                Title = $"Temperature for ID {ip}",
-                Values = new ChartValues<double>(dataForId.Where(d => !string.IsNullOrEmpty(d.MinTemp)).Select(d => double.Parse(d.MinTemp ?? "0"))),
+                Title = $"Temperature for IP {ip}",
+                Values = new ChartValues<double>(dataForId.Where(d => !string.IsNullOrEmpty(d.MaxTemp)).Select(d => double.Parse(d.MaxTemp ?? "0"))),
                 PointGeometry = DefaultGeometries.Circle
             };
 
             SeriesCollection.Add(series);
         }
+
         MemoryChartSeries = new SeriesCollection
         {
             new LineSeries
@@ -41,14 +45,13 @@ public partial class ChartViewModel : ObservableObject
                 Title = "Memory",
                 Values = new ChartValues<double> { },
                 StrokeThickness = 2,
-                //Fill = new SolidColorBrush(Color.FromRgb(0, 0, 255)),
                 PointGeometry = null
             }
         };
 
-        //timer = new Timer(1000); 
-        //timer.Elapsed += UpdateMemoryChart;
-        //timer.Start();
+        timer = new Timer(1000);
+        timer.Elapsed += UpdateMemoryChart;
+        timer.Start();
     }
 
     private void UpdateMemoryChart(object? sender, ElapsedEventArgs e)
@@ -73,7 +76,7 @@ public partial class ChartViewModel : ObservableObject
         }
         catch (ArgumentOutOfRangeException)
         {
-            
+            // ignored
         }
     }
 }

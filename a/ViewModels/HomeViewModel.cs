@@ -21,10 +21,9 @@ public partial class HomeViewModel : ObservableObject
         set => SetProperty(ref _isConnectViewOpen, value);
     }
     
-    
-    public HomeViewModel()
+    public HomeViewModel(CamDataContext context)
     {
-        ConnectViewModel = new ConnectViewModel(this);
+        ConnectViewModel = new ConnectViewModel(this, context);
         ConnectView = new ConnectView { DataContext = ConnectViewModel };
         Panels = new ObservableCollection<CamView>();
     }

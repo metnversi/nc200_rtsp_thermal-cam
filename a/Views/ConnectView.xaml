@@ -9,7 +9,6 @@
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=viewModels:ConnectViewModel, IsDesignTimeCreatable=False}"
              d:DesignHeight="450" d:DesignWidth="400"
-             
              Background="Black">
 
     <DockPanel Background="Black" >
@@ -17,9 +16,6 @@
             <DropShadowEffect BlurRadius="15" Direction="-90" RenderingBias="Quality" 
                                           Opacity=".2" ShadowDepth="1"/>
         </DockPanel.Effect>
-        <!--<DockPanel.OpacityMask>
-        <VisualBrush Visual="{Binding ElementName=Border3}" />
-      </DockPanel.OpacityMask>-->
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
@@ -42,7 +38,7 @@
                    Grid.Column="0" Grid.ColumnSpan="4"
                                    Foreground="White" FontSize="18"> Adding Camera</TextBlock>
 
-      <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" VerticalAlignment="Center"
+      <!--<TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" VerticalAlignment="Center"
                 materialDesign:HintAssist.Hint="IP address" Foreground="White"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10"
                 Text="{Binding Ip}"/>
@@ -50,18 +46,15 @@
                materialDesign:HintAssist.Hint="Username" Foreground="White"
                Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10"
                Text="{Binding Username}"/>
-      <!--<PasswordBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" VerticalAlignment="Center"
-                  materialDesign:HintAssist.HelperText="Will be encrypted" Margin="10"
-                  materialDesign:HintAssist.Hint="Password" Foreground="White"
-                  materialDesign:PasswordBoxAssist.Password="{Binding Password2, Mode=TwoWay}"
-                  materialDesign:TextFieldAssist.HasClearButton="True"
-                  IsEnabled="{Binding ElementName=RevealPasswordFloatingEnabled, Path=IsChecked}"
-                  Style="{StaticResource MaterialDesignFloatingHintRevealPasswordBox}" 
-                  />-->
+      
       <TextBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" VerticalAlignment="Center"
          materialDesign:HintAssist.Hint="Username" Foreground="White"
          Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10"
-         Text="{Binding Password}"/>
+         Text="{Binding Password}"/>-->
+
+      <DataGrid ItemsSource="{Binding Cams}" AutoGenerateColumns="True" Grid.Row="1" Grid.RowSpan="3"
+                Grid.ColumnSpan="4"
+                Margin="5,5,5,-30"/>
 
       <Button  Grid.Row="4" Grid.Column="3" 
                      Content="OK" Background="#005BAA" Foreground="White"

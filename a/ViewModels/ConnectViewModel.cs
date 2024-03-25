@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Net.NetworkInformation;
 using System.Windows;
 
 using a.Models;
@@ -14,22 +15,12 @@ public partial class ConnectViewModel : ObservableObject
     [ObservableProperty]
     private HomeViewModel _homeViewModel;
 
-    [ObservableProperty]
-    private string _ip;
+    public ObservableCollection<Cam> Cams { get; set;} 
 
-    [ObservableProperty]
-    private string _username;
-    [ObservableProperty]
-    private string _password;
-
-    //public ObservableCollection<Temp> source{ get; }
-
-    public ConnectViewModel(HomeViewModel homeViewModel)
+    public ConnectViewModel(HomeViewModel homeViewModel, CamDataContext context)
     {
         HomeViewModel = homeViewModel;
-        Ip = "192.168.1.168";
-        Username = "admin";
-        Password = "admin123";
+        Cams = new ObservableCollection<Cam>(context.Cams.ToList());
     }
     
     [RelayCommand]
@@ -41,15 +32,41 @@ public partial class ConnectViewModel : ObservableObject
     [RelayCommand]
     private async Task Add()
     {
-        var factory = new HttpCamClientFactory();
-        var camClient = factory.Create(Ip, Username, Password);
-        var camViewModel = await CamViewModel.CreateAsync(camClient);
-        var camView = new CamView { DataContext = camViewModel };
-
-        Application.Current.Dispatcher.Invoke(() =>
+        foreach(var cam in Cams)
         {
-            HomeViewModel.Panels.Add(camView);
-        });
+            if(cam.IsSelected == true && await IsHostAvailable(cam.IpAddress))
+            {
+                var factory = new HttpCamClientFactory();
+                var camClient = factory.Create(cam.IpAddress, cam.Username, cam.Password);
+                var camViewModel = await CamViewModel.CreateAsync(camClient);
+                var camView = new CamView { DataContext = camViewModel };
+
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    HomeViewModel.Panels.Add(camView);
+                });
+            }
+            else
+            {
+                MessageBox.Show($"Could not connect to IP {cam.IpAddress}");
+            }
+        }
+    }
+
+    private async Task<bool> IsHostAvailable(string host)
+    {
+        using (Ping ping = new Ping())
+        {
+            try
+            {
+                PingReply reply = await ping.SendPingAsync(host);
+                return reply.Status == IPStatus.Success;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 
     

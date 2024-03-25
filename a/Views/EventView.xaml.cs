@@ -1,11 +1,11 @@
 ﻿namespace a.Views;
 
 /// <summary>
-/// Interaction logic for HomeView.xaml
+/// Interaction logic for EventView.xaml
 /// </summary>
-public partial class HomeView 
+public partial class EventView 
 {
-    public HomeView()
+    public EventView()
     {
         InitializeComponent();
     }

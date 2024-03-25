@@ -53,6 +53,8 @@ public partial class App : Application
             services.AddSingleton<MainWindow>();
             services.AddSingleton<HomeViewModel>();
             services.AddSingleton<DataViewModel>();
+            services.AddSingleton<SetViewModel>();
+            services.AddSingleton<EventViewModel>();
             services.AddSingleton<ConnectViewModel>();
 
             services.AddDbContext<CamDataContext>(options =>
