@@ -17,17 +17,21 @@ public partial class CamViewModel : ObservableObject
 {
     [ObservableProperty]
     public HttpCamClient cam;
-    public Media media;
-    public Media media2;
     public MediaPlayer Player { get; private set; }
-    public MediaPlayer Player2 { get; private set; }
     private IMessenger Messenger { get; }
+
+    //public Media media2;
+    //public MediaPlayer Player2 { get; private set; }
+
+    [ObservableProperty]
+    public bool _isExpanded;
 
     [ObservableProperty]
     public string? _ipAddress;
 
-    public CamViewModel(HttpCamClient camClient, IMessenger messenger) // dont init the context for constructor, aaaah
+    public CamViewModel(HttpCamClient camClient, IMessenger messenger)
     {
+
         Messenger = messenger;
         Cam = camClient;
         IpAddress = camClient.Url; 
@@ -79,10 +83,10 @@ public partial class CamViewModel : ObservableObject
             var libVLC = new LibVLC();
             var media = new Media(libVLC, irRtspUrl, FromType.FromLocation);
             media.AddOption(":network-caching=100");
-            //media2 = new Media(libVLC, vlRtspUrl, FromType.FromLocation);
-            //media2.AddOption(":network-caching=100");
             Player = new MediaPlayer(media);
             Player.Play();
+            //media2 = new Media(libVLC, vlRtspUrl, FromType.FromLocation);
+            //media2.AddOption(":network-caching=100");
             //Player2 = new MediaPlayer(media2);
             //Player2.Play();
         });

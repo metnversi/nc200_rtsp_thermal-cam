@@ -61,6 +61,6 @@ public class Active
 }
 
 public record class ActiveUpdates(Active Active);
-public record class MaximizeMessage(CamViewModel Content);
+
 public record class TempMessage(Temp Temp);
 
