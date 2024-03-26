@@ -5,13 +5,15 @@ using System.Windows;
 using a.Models;
 
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 using LiveCharts;
 using LiveCharts.Wpf;
 
 namespace a.ViewModels;
 
-public partial class DataViewModel : ObservableObject
+public partial class DataViewModel : ObservableObject, IRecipient<TempMessage>
 {
     public ObservableCollection<Temp> Source { get; set; }
     private CamDataContext context { get; set; }
@@ -24,12 +26,14 @@ public partial class DataViewModel : ObservableObject
     public Func<double, string> YAxisFormatter { get; set; }
 
     public ObservableCollection<string> Ips { get; set; }
+    private CancellationTokenSource? _refreshCancellation;
 
 
-    public DataViewModel()
+    public DataViewModel(IMessenger messenger)
     {
         context = new CamDataContext();
-        Messenger.Instance.TempAdded += AddTemp;
+        //Messenger.Instance.TempAdded += AddTemp;
+        messenger.Register<TempMessage>(this, (recipent, message) => AddTemp(message.Temp).GetAwaiter());
         Source = new ObservableCollection<Temp>(context.Temps.OrderByDescending(t => t.Time).Take(50).ToList());
 
         Ips = new ObservableCollection<string>(Source.Select(t => t.IpAddress).Distinct());
@@ -40,28 +44,29 @@ public partial class DataViewModel : ObservableObject
         YAxisFormatter = value => value.ToString("F1");
 
         Source.CollectionChanged += (s, e) => 
-    {
-        if (e.NewItems != null)
         {
-            foreach(Temp newItem in e.NewItems)
+            if (e.NewItems != null)
             {
-                Labels.Add(DateTime.Now.ToString());
-                AddToSeries(newItem);
+                foreach(Temp newItem in e.NewItems)
+                {
+                    Labels.Add(DateTime.Now.ToString());
+                    AddToSeries(newItem);
+                }
             }
-        }
 
-        if (e.OldItems != null)
-        {
-            foreach(Temp oldItem in e.OldItems)
+            if (e.OldItems != null)
             {
-                RemoveFromSeries(oldItem);
+                foreach(Temp oldItem in e.OldItems)
+                {
+                    RemoveFromSeries(oldItem);
+                }
             }
-        }
-    };
+        };
     }
 
-    public void AddTemp(Temp temp)
+    public async Task AddTemp(Temp temp)
     {
+        await context.Temps.AddAsync(temp);
         Application.Current.Dispatcher.Invoke(() =>
         {
             Source.Add(temp);
@@ -121,5 +126,23 @@ public void RemoveFromSeries(Temp data)
                 AddToSeries(newItem);
             }
         }
+    }
+    [RelayCommand]
+    private async Task OnRefresh()
+    {
+        CancellationTokenSource cts = new();
+        Interlocked.Exchange(ref _refreshCancellation, cts)?.Cancel();
+        try
+        {
+            Source.Clear();
+            await Task.Delay(10, cts.Token);
+        }
+        catch (OperationCanceledException)
+        { }
+    }
+
+    public void Receive(TempMessage message)
+    {
+        AddTemp(message.Temp).GetAwaiter();
     }
 }

@@ -18,7 +18,7 @@
   <DockPanel LastChildFill="True" >
     <Grid>
       <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="250"/>
+        <ColumnDefinition Width="290"/>
         <ColumnDefinition />
         <ColumnDefinition />
         <ColumnDefinition />
@@ -37,7 +37,12 @@
         <RowDefinition Height="40*" />
         <RowDefinition  />
       </Grid.RowDefinitions>
-      <TreeView Background="Black" Grid.RowSpan="6" Margin="5" MinWidth="220">
+      
+        <DockPanel Grid.RowSpan="6" Width="290"
+           Grid.Column="0" Grid.ColumnSpan="1">
+          <local:TreeView x:Name="TreeView" DataContext="{Binding treeViewModel}"/>
+        </DockPanel>
+      <!-- <TreeView Background="Black" Grid.RowSpan="6" Margin="5" MinWidth="220">
         <TreeViewItem Header="Category 1">
           <TreeViewItem>
             <TreeViewItem.Header>
@@ -121,8 +126,8 @@
           </TreeViewItem>
         </TreeViewItem>
         <TreeViewItem
-    Header="Empty" />
-      </TreeView>
+           Header="Empty" />
+      </TreeView> -->
 
       <Button Command="{Binding ShowCommand}" 
               Background="#005BAA" Margin="5"
@@ -136,10 +141,15 @@
               <UniformGrid Columns="4" />
             </ItemsPanelTemplate>
           </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="{x:Type viewModels:CamViewModel}">
+              <local:CamView DataContext="{Binding}" />
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
           <ItemsControl.ItemContainerStyle>
-            <Style TargetType="local:CamView">
-              <Setter Property="HorizontalAlignment" Value="Stretch"/>
-              <Setter Property="Height" Value="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=ItemsControl}, Converter={StaticResource DivideByThreeConverter}}" />
+            <Style>
+              <Setter Property="FrameworkElement.HorizontalAlignment" Value="Stretch"/>
+              <Setter Property="FrameworkElement.Height" Value="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=ItemsControl}, Converter={StaticResource DivideByThreeConverter}}" />
             </Style>
           </ItemsControl.ItemContainerStyle>
         </ItemsControl>

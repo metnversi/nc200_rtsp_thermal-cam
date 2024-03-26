@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using a;
 
@@ -10,9 +11,11 @@ using a;
 namespace a.Migrations
 {
     [DbContext(typeof(CamDataContext))]
-    partial class CamDataContextModelSnapshot : ModelSnapshot
+    [Migration("20240325170510_Area6")]
+    partial class Area6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.2");
@@ -23,10 +26,6 @@ namespace a.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("AreaId")
-                        .IsRequired()
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("IpAddress")
                         .HasColumnType("TEXT");
 
@@ -34,8 +33,6 @@ namespace a.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AreaId");
 
                     b.ToTable("Actives");
                 });
@@ -106,17 +103,6 @@ namespace a.Migrations
                     b.ToTable("Temps");
                 });
 
-            modelBuilder.Entity("a.Models.Active", b =>
-                {
-                    b.HasOne("a.Models.Area", "Area")
-                        .WithMany("Actives")
-                        .HasForeignKey("AreaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Area");
-                });
-
             modelBuilder.Entity("a.Models.Cam", b =>
                 {
                     b.HasOne("a.Models.Area", "Area")
@@ -130,8 +116,6 @@ namespace a.Migrations
 
             modelBuilder.Entity("a.Models.Area", b =>
                 {
-                    b.Navigation("Actives");
-
                     b.Navigation("Cameras");
                 });
 #pragma warning restore 612, 618
