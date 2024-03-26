@@ -1,8 +1,11 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 using a.Models;
 
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 using LibVLCSharp.Shared;
 
@@ -18,19 +21,21 @@ public partial class CamViewModel : ObservableObject
     public Media media2;
     public MediaPlayer Player { get; private set; }
     public MediaPlayer Player2 { get; private set; }
+    private IMessenger Messenger { get; }
 
     [ObservableProperty]
-    public string? ipAddress;
+    public string? _ipAddress;
 
-    public CamViewModel(HttpCamClient camClient) // dont init the context for constructor, aaaah
+    public CamViewModel(HttpCamClient camClient, IMessenger messenger) // dont init the context for constructor, aaaah
     {
+        Messenger = messenger;
         Cam = camClient;
         IpAddress = camClient.Url; 
     }
 
-    public static async Task<CamViewModel> CreateAsync(HttpCamClient client)
+    public static async Task<CamViewModel> CreateAsync(HttpCamClient client, IMessenger messenger)
     {
-        var camViewModel = new CamViewModel(client);
+        var camViewModel = new CamViewModel(client, messenger);
         await camViewModel.Capture();
         return camViewModel;
     }
@@ -54,7 +59,7 @@ public partial class CamViewModel : ObservableObject
                     MaxTemp = max,
                     Time = DateTime.Now
                 };
-                Messenger.Instance.OnTempAdded(temp);
+                Messenger.Send(new TempMessage(temp));
                 using (var context = new CamDataContext())
                 {
                     var camera = await context.Cams.FirstOrDefaultAsync(c => c.IpAddress == ipAddress);
@@ -82,5 +87,9 @@ public partial class CamViewModel : ObservableObject
             //Player2.Play();
         });
     }
+
+    
 }
+
+
 

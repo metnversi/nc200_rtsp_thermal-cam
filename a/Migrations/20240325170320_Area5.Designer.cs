@@ -11,8 +11,8 @@ using a;
 namespace a.Migrations
 {
     [DbContext(typeof(CamDataContext))]
-    [Migration("20240325035144_Ijgg")]
-    partial class Ijgg
+    [Migration("20240325170320_Area5")]
+    partial class Area5
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,10 +20,28 @@ namespace a.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.2");
 
+            modelBuilder.Entity("a.Models.Area", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Areas");
+                });
+
             modelBuilder.Entity("a.Models.Cam", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("AreaId")
+                        .IsRequired()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("IpAddress")
@@ -39,6 +57,8 @@ namespace a.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AreaId");
 
                     b.ToTable("Cams");
                 });
@@ -64,6 +84,22 @@ namespace a.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Temps");
+                });
+
+            modelBuilder.Entity("a.Models.Cam", b =>
+                {
+                    b.HasOne("a.Models.Area", "Area")
+                        .WithMany("Cameras")
+                        .HasForeignKey("AreaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Area");
+                });
+
+            modelBuilder.Entity("a.Models.Area", b =>
+                {
+                    b.Navigation("Cameras");
                 });
 #pragma warning restore 612, 618
         }

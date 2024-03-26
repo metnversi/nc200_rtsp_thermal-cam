@@ -171,7 +171,6 @@ public class FunctionalAPI
         return (null, null);
     }
 
-
     public async Task<(string?, string?, string?)> GetRealTimeTemp()
     {
         var requestObject = new Request

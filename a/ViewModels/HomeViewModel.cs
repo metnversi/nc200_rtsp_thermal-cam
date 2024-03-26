@@ -1,31 +1,35 @@
 ﻿using System.Collections.ObjectModel;
-using System.Windows;
 
+using a.Models;
 using a.Views;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace a.ViewModels;
 
-public partial class HomeViewModel : ObservableObject
+public partial class HomeViewModel : ObservableObject, IRecipient<MaximizeMessage>
 {
+    public TreeViewModel treeViewModel { get; set; }
     public ConnectView ConnectView { get; private set; }
     public ConnectViewModel ConnectViewModel { get; }
-    public ObservableCollection<CamView> Panels { get; }
+    public ObservableCollection<CamViewModel> Panels { get; }
 
+    [ObservableProperty]
+    public CamViewModel? _selectedCam;
+
+    [ObservableProperty]
     private bool _isConnectViewOpen;
-    public bool IsConnectViewOpen
-    {
-        get => _isConnectViewOpen;
-        set => SetProperty(ref _isConnectViewOpen, value);
-    }
     
-    public HomeViewModel(CamDataContext context)
+    
+    public HomeViewModel(CamDataContext context, IMessenger messenger)
     {
-        ConnectViewModel = new ConnectViewModel(this, context);
+        ConnectViewModel = new ConnectViewModel(this, context, messenger);
+        treeViewModel = new TreeViewModel(messenger);
         ConnectView = new ConnectView { DataContext = ConnectViewModel };
-        Panels = new ObservableCollection<CamView>();
+        Panels = new ObservableCollection<CamViewModel>();
+        messenger.Register<MaximizeMessage>(this, (recipent, message) => Receive(message));
     }
     [RelayCommand]
     public void Show()
@@ -37,4 +41,9 @@ public partial class HomeViewModel : ObservableObject
         IsConnectViewOpen = false;
     }
 
+
+    public void Receive(MaximizeMessage message)
+    {
+        SelectedCam = message.Content;
+    }
 }

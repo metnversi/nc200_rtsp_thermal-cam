@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using a;
 
@@ -10,9 +11,11 @@ using a;
 namespace a.Migrations
 {
     [DbContext(typeof(CamDataContext))]
-    partial class CamDataContextModelSnapshot : ModelSnapshot
+    [Migration("20240325172716_Area7")]
+    partial class Area7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.2");

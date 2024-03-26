@@ -3,10 +3,10 @@ using System.Net.NetworkInformation;
 using System.Windows;
 
 using a.Models;
-using a.Views;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace a.ViewModels;
 
@@ -14,13 +14,15 @@ public partial class ConnectViewModel : ObservableObject
 {
     [ObservableProperty]
     private HomeViewModel _homeViewModel;
+    private IMessenger Messenger { get; }
 
     public ObservableCollection<Cam> Cams { get; set;} 
-
-    public ConnectViewModel(HomeViewModel homeViewModel, CamDataContext context)
+    
+    public ConnectViewModel(HomeViewModel homeViewModel, CamDataContext context, IMessenger messenger)
     {
         HomeViewModel = homeViewModel;
         Cams = new ObservableCollection<Cam>(context.Cams.ToList());
+        Messenger = messenger;
     }
     
     [RelayCommand]
@@ -38,18 +40,38 @@ public partial class ConnectViewModel : ObservableObject
             {
                 var factory = new HttpCamClientFactory();
                 var camClient = factory.Create(cam.IpAddress, cam.Username, cam.Password);
-                var camViewModel = await CamViewModel.CreateAsync(camClient);
-                var camView = new CamView { DataContext = camViewModel };
+                var camViewModel = await CamViewModel.CreateAsync(camClient, Messenger);
 
+                using(var context = new CamDataContext())
+                {
+                    var active = new Active { 
+                        AreaId=cam.AreaId, 
+                        IpAddress = cam.IpAddress, 
+                        IsActive = true };
+                    context.Actives.Add(active);
+                    await context.SaveChangesAsync();
+
+                    Messenger.Send(new ActiveUpdates(active));
+                }
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    HomeViewModel.Panels.Add(camView);
+                    HomeViewModel.Panels.Add(camViewModel);
                 });
             }
             else
             {
                 MessageBox.Show($"Could not connect to IP {cam.IpAddress}");
             }
+        }
+    }
+
+
+    [RelayCommand]
+    public async Task AddOne()
+    {
+        using (var context = new CamDataContext())
+        {
+
         }
     }
 
@@ -60,15 +82,17 @@ public partial class ConnectViewModel : ObservableObject
             try
             {
                 PingReply reply = await ping.SendPingAsync(host);
+                //IsActive = true;
                 return reply.Status == IPStatus.Success;
             }
             catch
             {
                 return false;
             }
+            
         }
     }
 
-    
+
 }
 

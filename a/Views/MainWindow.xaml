@@ -19,8 +19,10 @@
       <RowDefinition/>
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="300"/>
       <ColumnDefinition Width="200"/>
       <ColumnDefinition/>
+      
       <ColumnDefinition Width="100"/>
       <ColumnDefinition Width="100"/>
 
@@ -31,7 +33,7 @@
 
     <TabControl Grid.Row="1" Grid.RowSpan="2" VerticalContentAlignment="Top" 
                 materialDesign:ColorZoneAssist.Mode="PrimaryMid"
-                Grid.Column="1">
+                Grid.Column="2">
       <TabItem>
         <TabItem.Header>
           <StackPanel Orientation="Horizontal" Width="160" Height="auto">
@@ -49,7 +51,7 @@
             </Grid>
           </StackPanel>
         </TabItem.Header>
-        <view:HomeView x:Name="HomeView" Margin="-200,0,-200,0"/>
+        <view:HomeView x:Name="HomeView" Margin="-500,0,-200,0"/>
       </TabItem>
 
       <TabItem>
@@ -69,7 +71,7 @@
             </Grid>
           </StackPanel>
         </TabItem.Header>
-        <view:DataView x:Name="DataView" Margin="-200,0,-200,0"/>
+        <view:DataView x:Name="DataView" Margin="-500,0,-200,0"/>
       </TabItem>
 
 
@@ -90,7 +92,7 @@
             </Grid>
           </StackPanel>
         </TabItem.Header>
-        <view:EventView x:Name="EventView" Margin="-200,0,-200,0"/>
+        <view:EventView x:Name="EventView" Margin="-500,0,-200,0"/>
       </TabItem>
 
       <TabItem>
@@ -110,7 +112,7 @@
             </Grid>
           </StackPanel>
         </TabItem.Header>
-        <view:SettingView x:Name="SetView" Margin="-200,0,-200,0"/>
+        <view:SettingView x:Name="SetView" Margin="-500,0,-200,0"/>
       </TabItem>
     </TabControl>
 
@@ -118,9 +120,8 @@
             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
             Style="{StaticResource MaterialDesignIconForegroundButton}"
             ToolTip="Power Off"
-            Command="{x:Static ApplicationCommands.Close}">  
+            Command="{x:Static ApplicationCommands.Close}">
       <materialDesign:PackIcon Kind="Power"/>
     </Button>
-
   </Grid>
 </Window>
