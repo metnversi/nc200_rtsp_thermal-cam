@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 
 using a.Models;
 
@@ -8,7 +7,7 @@ namespace a.Views;
 /// <summary>
 /// Interaction logic for TreeView.xaml
 /// </summary>
-public partial class TreeView : UserControl
+public partial class TreeView
 {
     public TreeView()
     {

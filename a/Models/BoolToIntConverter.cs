@@ -3,16 +3,11 @@ using System.Windows.Data;
 
 namespace a.Models;
 
-public class DivideByThreeConverter : IValueConverter
+public class BoolToIntConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is double doubleValue)
-        {
-            return doubleValue / 3;
-        }
-
-        return Binding.DoNothing;
+        return (bool)value ? int.Parse((string)parameter) : 1;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

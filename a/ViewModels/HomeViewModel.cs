@@ -17,7 +17,9 @@ public partial class HomeViewModel : ObservableObject, IRecipient<MaximizeMessag
     public ObservableCollection<CamViewModel> Panels { get; }
 
     [ObservableProperty]
-    public CamViewModel? _selectedCam;
+    public string? _testString;
+
+    
 
     [ObservableProperty]
     private bool _isConnectViewOpen;
@@ -29,7 +31,7 @@ public partial class HomeViewModel : ObservableObject, IRecipient<MaximizeMessag
         treeViewModel = new TreeViewModel(messenger);
         ConnectView = new ConnectView { DataContext = ConnectViewModel };
         Panels = new ObservableCollection<CamViewModel>();
-        messenger.Register<MaximizeMessage>(this, (recipent, message) => Receive(message));
+        messenger.Register<MaximizeMessage>(this, (recipient, message) => ExpandCam(message.ip));
     }
     [RelayCommand]
     public void Show()
@@ -41,9 +43,25 @@ public partial class HomeViewModel : ObservableObject, IRecipient<MaximizeMessag
         IsConnectViewOpen = false;
     }
 
+    // private void ExpandCam(string ipAddress)
+    // {
+    //     var camViewModel = Panels.FirstOrDefault(c => c.IpAddress == ipAddress);
+    //     if (camViewModel != null)
+    //     {
+            
+    //     }
+    // }
+
+    private void ExpandCam(string ipAddress)
+    {
+        foreach (var panel in Panels)
+        {
+            panel.IsExpanded = panel.IpAddress == ipAddress;
+        }
+    }
 
     public void Receive(MaximizeMessage message)
     {
-        SelectedCam = message.Content;
+        
     }
 }
