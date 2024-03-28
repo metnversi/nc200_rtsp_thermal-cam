@@ -63,6 +63,7 @@ public partial class ConnectViewModel : ObservableObject
                 MessageBox.Show($"Could not connect to IP {cam.IpAddress}");
             }
         }
+        HomeViewModel.HideConnectView();
     }
 
 

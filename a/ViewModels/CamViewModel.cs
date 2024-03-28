@@ -3,6 +3,7 @@
 using a.Models;
 
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 
 using LibVLCSharp.Shared;
@@ -22,21 +23,21 @@ public partial class CamViewModel : ObservableObject, IRecipient<NotiMessage>
     //public MediaPlayer Player2 { get; private set; }
 
     [ObservableProperty]
+    public bool _isNormalCam;
+
+    [ObservableProperty]
     public bool _isMaximized;
 
     [ObservableProperty]
     public string? _ipAddress;
 
     public CamViewModel(HttpCamClient camClient, IMessenger messenger)
-{
-    Messenger = messenger;
-    Cam = camClient;
-    IpAddress = camClient.Url;
-    messenger.Register<NotiMessage>(this, (recipent, message) => Receive(message));
-
-    // Add this CamViewModel to the camViewModels dictionary in TreeViewModel
-    TreeViewModel.Instance.AddCamViewModel(IpAddress, this);
-}
+    {
+        Messenger = messenger;
+        Cam = camClient;
+        IpAddress = camClient.Url;
+        messenger.Register<NotiMessage>(this, (recipent, message) => Receive(message));
+    }
     public static async Task<CamViewModel> CreateAsync(HttpCamClient client, IMessenger messenger)
     {
         var camViewModel = new CamViewModel(client, messenger);
@@ -82,7 +83,7 @@ public partial class CamViewModel : ObservableObject, IRecipient<NotiMessage>
 
             var libVLC = new LibVLC();
             var media = new Media(libVLC, irRtspUrl, FromType.FromLocation);
-            media.AddOption(":network-caching=100");
+            //media.AddOption(":network-caching=100");
             Player = new MediaPlayer(media);
             Player.Play();
 
@@ -91,6 +92,12 @@ public partial class CamViewModel : ObservableObject, IRecipient<NotiMessage>
             //Player2 = new MediaPlayer(media2);
             //Player2.Play();
         });
+    }
+
+    [RelayCommand]
+    public void Wt()
+    {
+        IsNormalCam = !IsNormalCam;
     }
 
     public void Receive(NotiMessage message)
