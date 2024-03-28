@@ -7,6 +7,7 @@
     <UseWPF>true</UseWPF>
     <StartupObject>a.App</StartupObject>
     <ApplicationIcon>Resources\AppIcon.ico</ApplicationIcon>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <!--
