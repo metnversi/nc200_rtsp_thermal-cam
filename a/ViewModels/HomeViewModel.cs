@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows;
 
 using a.Models;
 using a.Views;
@@ -9,17 +10,12 @@ using CommunityToolkit.Mvvm.Messaging;
 
 namespace a.ViewModels;
 
-public partial class HomeViewModel : ObservableObject, IRecipient<MaximizeMessage>
+public partial class HomeViewModel : ObservableObject, IRecipient<MaxMessage>
 {
     public TreeViewModel treeViewModel { get; set; }
     public ConnectView ConnectView { get; private set; }
     public ConnectViewModel ConnectViewModel { get; }
     public ObservableCollection<CamViewModel> Panels { get; }
-
-    [ObservableProperty]
-    public string? _testString;
-
-    
 
     [ObservableProperty]
     private bool _isConnectViewOpen;
@@ -31,7 +27,7 @@ public partial class HomeViewModel : ObservableObject, IRecipient<MaximizeMessag
         treeViewModel = new TreeViewModel(messenger);
         ConnectView = new ConnectView { DataContext = ConnectViewModel };
         Panels = new ObservableCollection<CamViewModel>();
-        messenger.Register<MaximizeMessage>(this, (recipient, message) => ExpandCam(message.ip));
+        messenger.Register<MaxMessage>(this, (recipient, message) => Receive(message));
     }
     [RelayCommand]
     public void Show()
@@ -42,26 +38,20 @@ public partial class HomeViewModel : ObservableObject, IRecipient<MaximizeMessag
     {
         IsConnectViewOpen = false;
     }
-
-    // private void ExpandCam(string ipAddress)
-    // {
-    //     var camViewModel = Panels.FirstOrDefault(c => c.IpAddress == ipAddress);
-    //     if (camViewModel != null)
-    //     {
-            
-    //     }
-    // }
-
-    private void ExpandCam(string ipAddress)
+    public void Receive(MaxMessage msg)
     {
-        foreach (var panel in Panels)
+        Application.Current.Dispatcher.Invoke(() =>
         {
-            panel.IsExpanded = panel.IpAddress == ipAddress;
-        }
-    }
+            foreach (var panel in Panels)
+            {
+                panel.IsMaximized = false;
+            }
 
-    public void Receive(MaximizeMessage message)
-    {
-        
+            var senderPanel = Panels.FirstOrDefault(p => p == msg.c);
+            if (senderPanel != null)
+            {
+                senderPanel.IsMaximized = true;
+            }
+        });
     }
 }

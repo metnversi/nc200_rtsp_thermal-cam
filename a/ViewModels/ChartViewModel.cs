@@ -56,27 +56,26 @@ public partial class ChartViewModel : ObservableObject
 
     private void UpdateMemoryChart(object? sender, ElapsedEventArgs e)
     {
-        try
-        {
-            var memoryUsage = Process.GetCurrentProcess().PrivateMemorySize64 / (1024.0 * 1024.0);
-            if (Application.Current != null)
-            {
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    if (MemoryChartSeries != null && MemoryChartSeries.Count > 0 && MemoryChartSeries[0].Values != null)
-                    {
-                        MemoryChartSeries[0].Values.Add(memoryUsage);
-                        if (MemoryChartSeries[0].Values.Count > 60)
-                        {
-                            MemoryChartSeries[0].Values.RemoveAt(0);
-                        }
-                    }
-                });
-            }
-        }
-        catch (ArgumentOutOfRangeException)
-        {
-            // ignored
-        }
+        //try
+        //{
+        //    var memoryUsage = Process.GetCurrentProcess().PrivateMemorySize64 / (1024.0 * 1024.0);
+        //    if (Application.Current != null)
+        //    {
+        //        Application.Current.Dispatcher.Invoke(() =>
+        //        {
+        //            if (MemoryChartSeries != null && MemoryChartSeries.Count > 0 && MemoryChartSeries[0].Values != null)
+        //            {
+        //                MemoryChartSeries[0].Values.Add(memoryUsage);
+        //                if (MemoryChartSeries[0].Values.Count > 60)
+        //                {
+        //                    MemoryChartSeries[0].Values.RemoveAt(0);
+        //                }
+        //            }
+        //        });
+        //    }
+        //}
+        //catch (ArgumentOutOfRangeException)
+        //{
+        //}
     }
 }

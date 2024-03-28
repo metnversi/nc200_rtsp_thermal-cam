@@ -9,7 +9,7 @@
              xmlns:libvlc="clr-namespace:LibVLCSharp.WPF;assembly=LibVLCSharp.WPF"
              d:DataContext="{d:DesignInstance Type=viewModels:CamViewModel, IsDesignTimeCreatable=False}"
              mc:Ignorable="d"
-             Background="Transparent" Height="350" Width="420">
+             Background="Red">
 
   <Grid>
     <Grid.RowDefinitions>

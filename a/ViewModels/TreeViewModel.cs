@@ -1,6 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Data;
 
+using a.ViewModels;
+
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -13,10 +15,11 @@ public partial class TreeViewModel : ObservableObject, IRecipient<ActiveUpdates>
     public ObservableCollection<IGrouping<int?, Active>> ActiveCams { get; } = new ObservableCollection<IGrouping<int?, Active>>();
 
     public IMessenger Messenger { get; }
-    
+    public static TreeViewModel Instance { get; private set; }
 
     public TreeViewModel(IMessenger messenger) 
     {
+        Instance = this;
         Messenger = messenger;
         DeleteRecord().GetAwaiter();
         messenger.Register<ActiveUpdates>(this, (recipent, message) => LoadActiveCams().GetAwaiter());
@@ -64,13 +67,29 @@ public partial class TreeViewModel : ObservableObject, IRecipient<ActiveUpdates>
         await RefreshCommand.ExecuteAsync(null);
     }
 
-    
     [RelayCommand]
     public async Task Maxim(string ipAddress)
     {
         await RefreshCommand.ExecuteAsync(null);
-        Messenger.Send(new MaximizeMessage(ipAddress));
+        ipAddress = "http://" + ipAddress +  "/getmsginfo";
+        //SendMaximizeMessage(ipAddress);
+        Messenger.Send(new NotiMessage(ipAddress));
+    }
+
+    private Dictionary<string, CamViewModel> camViewModels = new Dictionary<string, CamViewModel>();
+
+    public void AddCamViewModel(string ipAddress, CamViewModel viewModel)
+    {
+        camViewModels[ipAddress] = viewModel;
+    }
+
+    public void SendMaximizeMessage(string ipAddress)
+    {
+        if (camViewModels.TryGetValue(ipAddress, out var viewModel))
+        {
+            viewModel.Maximize();
+        }
     }
 }
 
-public record class MaximizeMessage(string ip);
+public record class NotiMessage(string ip);

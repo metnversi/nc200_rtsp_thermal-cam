@@ -51,31 +51,17 @@
               Grid.Column="1"/>
 
       <ScrollViewer Grid.Row="1" Grid.Column="1" Grid.RowSpan="6" Grid.ColumnSpan="12" Margin="10">
-        <ItemsControl ItemsSource="{Binding Panels}">
+        <ItemsControl ItemsSource="{Binding Panels}" >
           <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-              <UniformGrid Columns="4" />
-              <!--<Grid/>-->
+              <model:CustomGridPanel />
             </ItemsPanelTemplate>
           </ItemsControl.ItemsPanel>
           <ItemsControl.ItemTemplate>
             <DataTemplate DataType="{x:Type viewModels:CamViewModel}">
-              <local:CamView DataContext="{Binding}">
-                <local:CamView.Style>
-                  <Style TargetType="local:CamView">
-                    <Setter Property="Grid.ColumnSpan" Value="{Binding IsExpanded, Converter={StaticResource BoolToIntConverter}, ConverterParameter=12}" />
-                    <Setter Property="Grid.RowSpan" Value="{Binding IsExpanded, Converter={StaticResource BoolToIntConverter}, ConverterParameter=6}" />
-                  </Style>
-                </local:CamView.Style>
-              </local:CamView>
+              <local:CamView/>
             </DataTemplate>
           </ItemsControl.ItemTemplate>
-          <ItemsControl.ItemContainerStyle>
-            <Style>
-              <Setter Property="FrameworkElement.HorizontalAlignment" Value="Stretch"/>
-              <Setter Property="FrameworkElement.Height" Value="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=ItemsControl}, Converter={StaticResource DivideByThreeConverter}}" />
-            </Style>
-          </ItemsControl.ItemContainerStyle>
         </ItemsControl>
       </ScrollViewer>
       <ContentControl Grid.Row="1" Grid.RowSpan="4" 
@@ -83,10 +69,7 @@
                       Margin="15,0,15,0"
                       Content="{Binding ConnectView}" 
                       Visibility="{Binding IsConnectViewOpen, Converter={StaticResource BooleanToVisibilityConverter}}" />
-      <!--<local:ConnectView Grid.Row="1" Grid.RowSpan="4" 
-                         Grid.Column="3" Grid.ColumnSpan="3"
-                         Margin="10,0,10,0"
-                         Visibility="{Binding IsConnectViewOpen, Converter={StaticResource BooleanToVisibilityConverter}}" />-->
+      
     </Grid>
   </DockPanel>
 </UserControl>

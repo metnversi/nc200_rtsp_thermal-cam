@@ -29,5 +29,28 @@
     </HierarchicalDataTemplate>
   </UserControl.Resources>
 
-  <TreeView ItemsSource="{Binding ActiveCams}" ItemTemplate="{StaticResource GroupTemplate}"/>
+  <DockPanel Grid.Row="0" Grid.Column="1" Height="Auto" Background="Black"
+                            Grid.ColumnSpan="1" Grid.RowSpan="2">
+    <DockPanel.Effect>
+      <DropShadowEffect BlurRadius="15" Direction="-90" RenderingBias="Quality" 
+                                          Opacity=".2" ShadowDepth="1"/>
+    </DockPanel.Effect>
+    <DockPanel.OpacityMask>
+      <VisualBrush Visual="{Binding ElementName=Border3}" />
+    </DockPanel.OpacityMask>
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="40"/>
+        <RowDefinition/>
+      </Grid.RowDefinitions>
+      <Border x:Name="Border3" Grid.Row="0" Grid.RowSpan="5" CornerRadius="5" Background="White" 
+              Margin="-1"/>
+      <Border Grid.Row="0" Grid.RowSpan="2" Background="Black" Margin="-2"></Border>
+      <TextBlock Grid.Row="0" TextAlignment="Center" Padding="10, 10, 0, 5" 
+                                   Foreground="White" FontSize="18"> Node Priority</TextBlock>
+      
+    <TreeView ItemsSource="{Binding ActiveCams}" ItemTemplate="{StaticResource GroupTemplate}" Grid.RowSpan="2" Margin="10,100"/>
+    </Grid>
+  </DockPanel>
+
 </UserControl>

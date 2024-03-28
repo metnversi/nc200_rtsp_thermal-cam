@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Net;
 using System.Windows;
 
 using a.Models;
@@ -32,14 +33,10 @@ public partial class DataViewModel : ObservableObject, IRecipient<TempMessage>
     public DataViewModel(IMessenger messenger)
     {
         context = new CamDataContext();
-        //Messenger.Instance.TempAdded += AddTemp;
         messenger.Register<TempMessage>(this, (recipent, message) => AddTemp(message.Temp).GetAwaiter());
         Source = new ObservableCollection<Temp>(context.Temps.OrderByDescending(t => t.Time).Take(50).ToList());
-
-        Ips = new ObservableCollection<string>(Source.Select(t => t.IpAddress).Distinct());
-
+        Ips = new ObservableCollection<string>(Source.Select(t => t.IpAddress ?? throw new ArgumentNullException(nameof(IPAddress))).Distinct());
         ChartViewModel = new ChartViewModel(Source, Ips);
-
         Labels = new List<string>();
         YAxisFormatter = value => value.ToString("F1");
 
@@ -81,7 +78,6 @@ public partial class DataViewModel : ObservableObject, IRecipient<TempMessage>
     {
         series.Values.Add(double.Parse(data.MaxTemp ?? "0"));
 
-        // Only keep the last 50 values
         while (series.Values.Count > 50)
         {
             series.Values.RemoveAt(0);
@@ -108,8 +104,6 @@ public void RemoveFromSeries(Temp data)
     if (series != null)
     {
         series.Values.RemoveAt(0);
-
-        // If the series is empty, remove it
         if (series.Values.Count == 0)
         {
             ChartViewModel.SeriesCollection.Remove(series);
